@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>WebGL Earth</title>
+	<title>Earth</title>
 	<style>
         html{width: 100%; height: 100%;}
 		body { width: 100%; height: 100%;margin: 0; overflow: hidden; background-color: #000; }
@@ -16,17 +16,15 @@
         
     </style>
    
-</head>
-<body>
-	<div id="webgl"></div>
-<!--    <footer style="position:fixed; bottom: 0;width: 100%;height: 100px;background-color:red"></footer>-->
-    
     <script src="js/threeLib/three.min.js"></script>
-	<script src="js/threeLib/Detector.js"></script>
+	<script src="js/threeLib/threeLibUtils.js"></script>
 	<script src="js/threeLib/TrackballControls.js"></script>
-    <script src="js/threeLib/Dots.js"></script>
-	<script src="js/threeLib/earth.js"></script>
+    <script src="js/threeLib/threeLibGateway.js"></script>
     
-<!--    <script src="js/LatitudeLongitude.js"></script>-->
+</head>
+<body onload = "init()">
+	
+    <div id="webgl"></div>
+
 </body>
 </html>
