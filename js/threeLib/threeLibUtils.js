@@ -1,9 +1,9 @@
 /**
  * Created by ss on 2017/4/12.
  */
-var RADIUS = 0.5;
 
-function init() {
+
+function buildEarthModel() {
     
     var Detector = {
 
@@ -40,6 +40,7 @@ function init() {
 	}
 
 };
+    var RADIUS = 0.5;
     
 	var webglEl = document.getElementById('webgl');
 
@@ -156,6 +157,8 @@ function init() {
 
 
     function Dots(lat,lon,mag,dep) {
+        var RADIUS = 0.5;
+        
         this.latitude = lat;
         this.longitude = lon;
         this.magnitude = mag;
@@ -164,11 +167,11 @@ function init() {
         var phi   = (90-lat)*(Math.PI/180);
         var theta = (lon+180)*(Math.PI/180);
     
-        this.x = -((0.5) * Math.sin(phi)*Math.cos(theta));
+        this.x = -((RADIUS) * Math.sin(phi)*Math.cos(theta));
     
-        this.y = ((0.5) * Math.cos(phi));
+        this.y = ((RADIUS) * Math.cos(phi));
     
-        this.z = -((0.5) * Math.sin(phi)*Math.sin(theta));
+        this.z = -((RADIUS) * Math.sin(phi)*Math.sin(theta));
 }
 
 

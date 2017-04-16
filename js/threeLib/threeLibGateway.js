@@ -1,9 +1,14 @@
 /**
  * Created by ss on 2017/4/12.
  */
- var width= window.innerWidth;
- var height= window.innerHeight;
-
+ function buildEnvironment(){
+     
+ this.width= window.innerWidth;
+ this.height= window.innerHeight;
  
- var dots = [];
- dots.push(new Dots(37,121,0,0));//Dots(latitude,longitude,magnitude,depth)
+ this.buildEarth = buildEarthModel();
+ this.dots = [];
+ dots.push(new Dots(37,121,0,0));//for test
+ dots.push(new Dots(latitude,longitude,magnitude,depth));
+     //Dots(latitude,longitude,magnitude,depth)
+ }
