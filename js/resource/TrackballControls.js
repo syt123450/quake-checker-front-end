@@ -16,19 +16,19 @@ THREE.TrackballControls = function ( object, domElement ) {
 	this.screen = { width: 0, height: 0, offsetLeft: 0, offsetTop: 0 };
 	this.radius = ( this.screen.width + this.screen.height ) / 4;
 
-	this.rotateSpeed = 1.0;
+	this.rotateSpeed = 1.5;
 	this.zoomSpeed = 1.0;
 	this.panSpeed = 0.3;
 
 	this.noRotate = false;
 	this.noZoom = false;
-	this.noPan = true;
+	this.noPan = false;
 
-	this.staticMoving = false;
+	this.staticMoving = true;
 	this.dynamicDampingFactor = 0.2;
 
-	this.minDistance = 0.8;
-	this.maxDistance = 2;
+	this.minDistance = 0;
+	this.maxDistance = Infinity;
 
 	this.keys = [ 65 /*A*/, 83 /*S*/, 68 /*D*/ ];
 
@@ -131,13 +131,11 @@ THREE.TrackballControls = function ( object, domElement ) {
 
 	this.rotateCamera = function () {
 
-
 		var angle = Math.acos( _rotateStart.dot( _rotateEnd ) / _rotateStart.length() / _rotateEnd.length() );
 
 		if ( angle ) {
-
-//            var axis = (1,1,1);
-			var axis = ( new THREE.Vector3() ).crossVectors( _rotateStart, _rotateEnd ).normalize();
+           
+			var axis = new THREE.Vector3( 0, 1, 0 );
 				quaternion = new THREE.Quaternion();
 
 			angle *= _this.rotateSpeed;
@@ -145,7 +143,7 @@ THREE.TrackballControls = function ( object, domElement ) {
 			quaternion.setFromAxisAngle( axis, -angle );
 
 			_eye.applyQuaternion( quaternion );
-			_this.object.up.applyQuaternion( quaternion );
+			//_this.object.up.applyQuaternion( quaternion );
 
 			_rotateEnd.applyQuaternion( quaternion );
 
