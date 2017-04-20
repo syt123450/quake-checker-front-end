@@ -3,5 +3,5 @@
  */
 
 $(function() {
-    init();
-});
+    buildEnvironment();
+})

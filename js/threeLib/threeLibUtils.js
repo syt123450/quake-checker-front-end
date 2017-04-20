@@ -3,7 +3,7 @@
  */
 
 
-function buildEarthModel() {
+function buildEarthModel(width,height,dots) {
     
     var Detector = {
 
@@ -56,7 +56,7 @@ function buildEarthModel() {
 
 	var scene = new THREE.Scene();
 
-	var camera = new THREE.PerspectiveCamera(45, width/ height, 0.1, 1000);
+	var camera = new THREE.PerspectiveCamera(45, width/height, 0.1, 1000);
 
     //fov:distace from the screen ，camera frustum vertical field of view
     //aspect: camera frustum aspect ratio(display varies with different screens)
