@@ -1,49 +1,66 @@
 /**
  * Created by ss on 2017/4/13.
+ * Code is based on D3.js library; please import <script src="https://d3js.org/d3.v4.min.js"></script> in HMTL head 
  */
-"use strict"
 
-//set up graph width base on svg width and margin
-var gWidth=function(diagram){
-	return diagram.width- diagram.margin.left - diagram.margin.right;
-};
 
-//set up graph height base on svg height and margin
-var gHeight=function(diagram){
-	console.log(diagram.height);
-	console.log(diagram.margin);
-	return diagram.height- diagram.margin.top - diagram.margin.bottom;
-};
+
 
 
 //base class for diagram
-var Diagram=function(){
+var ChartDiagram=function(){
+	this.radio=(GraphicChart.radio?GraphicChart.radio:1.6);
 	this.width = window.innerWidth;
 	this.height= window.innerHeight;
 	this.svg;
-	this.margin={top:20, right:20, bottom:30, left: 50};
-	this.color="#444";
+	this.margin={top:20, right:20, bottom:50, left: 50};
+	this.color="red";
 	this.backgroundColor="#000000";
-	this.fillingColor="white";
+	this.fillingColor="#666";
+	this.parent;
+	this.g;
+	this.x;
+	this.y;
+	this.charts=[];
+	this.data;
 
-	
-	this.diagramSize=function(w, h){
-		if(w&&h){
-			this.width=w;
-			this.height=h;
+}
+
+//set up graph width base on svg width and margin
+ChartDiagram.prototype.gWidth=function(){
+	console.log(this.width- this.margin.left - this.margin.right);
+	return this.width- this.margin.left - this.margin.right;
+};
+
+//set up graph height base on svg height and margin
+ChartDiagram.prototype.gHeight=function(){
+	console.log(this.height);
+	console.log(this.height- this.margin.top - this.margin.bottom);
+	return this.height- this.margin.top - this.margin.bottom;
+};
+ChartDiagram.prototype.data=function(data){
+	this.data = data;
+	return this;
+}
+////***** based on its parent element size;
+// ChartDiagram.prototype.diagramSize=function(w, h){
+// 		if(w&&h){
+// 			this.width=w;
+// 			this.height=h;
 			
-		return this;
-		}
-		if(w){
-			this.width=w.width;
-			this.height=w.height;
+// 		return this;
+// 		}
+// 		if(w){
+// 			this.width=w.width;
+// 			this.height=w.height;
 		
-			return this;
-		}
-		return {width:this.width,height:this.height};
+// 			return this;
+// 		}
+// 		return {width:this.width,height:this.height};
 
-	}
-	this.margins=function(margin){
+// }
+
+ChartDiagram.prototype.margins=function(margin){
 		if(margin){
 			if(margin.top){
 				this.margin.top=margin.top;
@@ -63,36 +80,64 @@ var Diagram=function(){
 		return this.margin;
 	}
 
-	this.createSVG=function(parentElement,desc){
+ChartDiagram.prototype.createSVG=function(parentElement,desc){
 		
-		console.log(gHeight(this))
+		console.log(this.gHeight(this))
+		this.parent=d3.select(parentElement);
+	
+		this.width= Math.floor(parseFloat(this.parent.style('width')));
+		this.height= this.width/this.radio;//Math.floor(parseFloat(this.parent.style('height')));
+		console.log(this.width+","+this.height);
 		if(desc){
-			d3.select(parentElement)
-				.append('h4').text(desc);
+			this.parent.append('h4').text(desc);
 		}
-		this.svg=d3.select(parentElement)
+		this.svg=this.parent
 				.append("svg")
 					.attr("width",this.width)
 					.attr("height",this.height);
 		return this.svg.append("g").attr("transform", "translate("+this.margin.left+","+ this.margin.top+")");
 	}
 
-	return this;
+/**
+*Class for create dot diagream
+* ----------need to be update in the future to fit various situation
+*/
+var DotDiagram=function(){
+	ChartDiagram.call(this);
+	this.method;
+	
+	this.data;
+	
+	this.x;
+	this.y;
+
+	this.api;
+	this.parentPath;
+	this.pro;
+
+
+
 }
+DotDiagram.prototype = Object.create(ChartDiagram.prototype);
+DotDiagram.prototype.constructor=DotDiagram;
 
 /**
 *parse data from geojson
 * ----------need to be update in the future
 */
 
-var filterFromGEOJSON=function(geojson){
+DotDiagram.prototype.depthAxis=function(geojson){
 	var newData=[];
-
-		//console.log(geojson);
+		//console.log("======"+dig);
+		console.log(this);
+		this.x=d3.scaleTime().rangeRound([0,this.gWidth()]);
+		console.log(d3.scaleTime().rangeRound([0,this.gWidth()]));
+		this.y=d3.scaleLinear().rangeRound([this.gHeight(),0]);
+		
 		geojson.forEach(function Each(oneD){
 			var item={};
-			item.mag= oneD.properties.mag;
-			item.date=oneD.properties.time;
+			item.y= oneD.properties.mag;
+			item.x=oneD.properties.time;
 			item.alert=oneD.properties.alert;
 			item.place= oneD.properties.place;
 			item.url=oneD.properties.url;
@@ -101,50 +146,66 @@ var filterFromGEOJSON=function(geojson){
 		return newData;
 }
 
-/**
-*Class for create dot diagream
-* ----------need to be update in the future to fit various situation
-*/
-var DotDiagram=function(){
-	Diagram.call(this);
 
-	
-	var data;
-	var groupWidth,groupHeight;
-	var g;
-	var api,parent,pro;
+DotDiagram.prototype.parseLatLngMag=function(geojson){
+		var newData=[];
+		this.x=d3.scaleLinear().rangeRound([0,this.gWidth()]);
+		this.y=d3.scaleLinear().rangeRound([this.gHeight(),0]);
+		//console.log(geojson);
+		geojson.forEach(function Each(oneD){
+			var item={};
+			item.mag= oneD.properties.mag;
+			//item.date=oneD.properties.time;
+			item.alert=oneD.properties.alert;
+			item.place= oneD.properties.place;
+			item.url=oneD.properties.url;
+			item.y=oneD.geometry.coordinates[1];
+			item.x=oneD.geometry.coordinates[0];
+			newData.push(item);
+		});
+		return newData;
+}
 
+DotDiagram.prototype.updateGraph=function(){
+		this.svg.remove();
+		this.render(this.api,this.parentPath,this.method,this.pro);
+	}
 /**
 * Creating svg from data 
 * 
 */
-	this.render=function(dataAPI,parentElement,properties,desc){
-		api=dataAPI;
-		parent=parentElement;
-		pro=properties;
-		g = this.createSVG(parentElement,desc);
-		groupHeight=gHeight(this);
-		groupWidth=gWidth(this);
+DotDiagram.prototype.render=function(dataAPI,parentElement,parseDataMethod,properties,desc){
+		this.method=parseDataMethod;
+		console.log(this.method);
+		var api=this.api=dataAPI;
+		var parent=this.parentPath=parentElement;
+		var pro=this.pro=properties;
+		var g = this.createSVG(parentElement,desc);
 
-		var x=d3.scaleTime().rangeRound([0,groupWidth]);
-		var y=d3.scaleLinear().rangeRound([groupHeight,0]);
+		var groupHeight=this.gHeight();
+		var groupWidth=this.gWidth();
+		
+		console.log(this);
+		var dig=this;
 
 		d3.json(dataAPI,function(d){
-			var newData=filterFromGEOJSON(d);
-			console.log(groupHeight);
-			x.domain(d3.extent(newData,function(d){return d.date;}));
-			y.domain(d3.extent(newData,function(d){return d.mag;}));
+			console.log(dig.method);
+			var newData=dig.method(d,dig);
+			console.log(dig.x);
+			//console.log(x);
+			dig.x.domain(d3.extent(newData,function(d){return d.x;}));
+			dig.y.domain(d3.extent(newData,function(d){return d.y;}));
 
 			g.append("g")
 					.attr("transform","translate(0,"+groupHeight+")")
-					.call(d3.axisBottom(x))
+					.call(d3.axisBottom(dig.x))
 				.select(".domain")
 					.remove();
 
 			g.append('g')
-					.call(d3.axisLeft(y))
+					.call(d3.axisLeft(dig.y))
 				.append('text')
-					.attr('fill',function(){if(properties&&properties.backgroundColor)return properties.backgroundColor; return this.backgroundColor;})
+					.attr('fill',function(){if(properties&&properties.backgroundColor)return properties.backgroundColor; return dig.backgroundColor;})
 					.attr('transform',"rotate(-90)")
 					.attr('y',6)
 					.attr('dy','0.71em') ///////----------size
@@ -160,22 +221,14 @@ var DotDiagram=function(){
       				.attr('target',"_blank")
       			//create dots
       			.append("circle")
-        			.attr("r", function(){if(properties&&properties.radius) return properties.radius;return 3.5;})
-        			.attr("cx", function(d) { return x(d.date); })
-        			.attr("cy", function(d) { return y(d.mag); })
-        			.attr("stroke",function(){if(properties&&properties.color)return properties.color; return this.color;})
-        			.attr("fill",function(d){if(d.alert==null){if(properties&&properties.fillingColor) return properties.fillingColor; return this.fillingColor;}return d.alert;})
+        			.attr("r", function(d){console.log(Math.pow(d.mag?d.mag:d.y,0.2)*4);if(properties&&properties.radius) return properties.radius;return Math.pow(d.mag?d.mag:d.y,2)/4;})
+        			.attr("cx", function(d) { return dig.x(d.x); })
+        			.attr("cy", function(d) { return dig.y(d.y); })
+        		    .attr("opacity",0.6)
+        			//.attr("stroke",function(){if(properties&&properties.color)return properties.color; return dig.color;})
+        			.attr("fill",function(d){if(d.alert==null){if(properties&&properties.fillingColor) return properties.fillingColor; return dig.fillingColor;} return d.alert;})
         		//create title for each dots
-        		.append('title').html(function(d){return d.place +"  "+ d.mag;});
+        		.append('title').html(function(d){return d.place+" "+(d.mag?d.mag:d.y);});
         		
 		});
 	}
-	this.updateGraph=function(){
-		this.svg.remove();
-		this.render(api,parent,pro);
-	}
-
-	return this;
-}
-DotDiagram.prototype = Object.create(Diagram.prototype);
-DotDiagram.prototype.constructor=DotDiagram;
