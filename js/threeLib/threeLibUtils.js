@@ -70,12 +70,11 @@ function buildEarthModel(width,height,dots) {
     scene.add(new THREE.AmbientLight(0xffffff,0.001));
 
     
-       var axisHelper = new THREE.AxisHelper( 5 );
-       scene.add( axisHelper );
+
     
        var spherePoint = createPoints();
        spherePoint.rotation.y = rotation; 
-	   scene.add(sphere);
+
     
        light = new THREE.PointLight( 0xf087a2, 2, 50 );
        light.add( spherePoint );
@@ -83,12 +82,15 @@ function buildEarthModel(width,height,dots) {
        light.position.set( dots[0].x,dots[0].y,dots[0].z);
  
      
-      scene.add( light );
+      //scene.add( light );
   
 
     var sphere = createSphere(radius, segments);
-	sphere.rotation.y = 0.001; 
-	scene.add(sphere);
+	
+    sphere.add( light );
+    
+           var axisHelper = new THREE.AxisHelper( 5 );
+       sphere.add( axisHelper );
 
     var clouds = createClouds(radius, segments);
 	clouds.rotation.y = rotation;
@@ -100,15 +102,18 @@ function buildEarthModel(width,height,dots) {
 	var controls = new THREE.TrackballControls(camera);
 
 	webglEl.appendChild(renderer.domElement);
-
+    var group= new THREE.Object3D();
+    group.add(sphere);
+    group.add(clouds);
+    group.rotateZ(-Math.PI*23.5/180);
+    scene.add(group);
 	render();
 
 
 	function render() {
 		controls.update();
-        
-		sphere.rotation.y += 0;
-		clouds.rotation.y += 0;		
+		sphere.rotation.y += 0.001;
+		clouds.rotation.y += 0.001;		
 		requestAnimationFrame(render);
 		renderer.render(scene, camera);
 	}

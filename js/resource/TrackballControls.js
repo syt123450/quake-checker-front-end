@@ -27,8 +27,8 @@ THREE.TrackballControls = function ( object, domElement ) {
 	this.staticMoving = true;
 	this.dynamicDampingFactor = 0.2;
 
-	this.minDistance = 0;
-	this.maxDistance = Infinity;
+	this.minDistance = 0.8;
+	this.maxDistance = 2;
 
 	this.keys = [ 65 /*A*/, 83 /*S*/, 68 /*D*/ ];
 
@@ -132,18 +132,23 @@ THREE.TrackballControls = function ( object, domElement ) {
 	this.rotateCamera = function () {
 
 		var angle = Math.acos( _rotateStart.dot( _rotateEnd ) / _rotateStart.length() / _rotateEnd.length() );
-
+        
 		if ( angle ) {
            
-			var axis = new THREE.Vector3( 0, 1, 0 );
-				quaternion = new THREE.Quaternion();
+			var axis = new THREE.Vector3( Math.sin(23.5*Math.PI/180), Math.cos(23.5*Math.PI/180), 0 );
+//            
+//            	var axis = new THREE.Vector3( 0, 1, 0 );
+        
+            
+            
+            quaternion = new THREE.Quaternion();
 
 			angle *= _this.rotateSpeed;
 
 			quaternion.setFromAxisAngle( axis, -angle );
 
 			_eye.applyQuaternion( quaternion );
-			//_this.object.up.applyQuaternion( quaternion );
+			_this.object.up.applyQuaternion( quaternion );
 
 			_rotateEnd.applyQuaternion( quaternion );
 
