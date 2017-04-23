@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		<title>Sample four temple to create svg </title>
+		<script src="./js/resource/d3.min.js"></script>
+		<script src="./js/graphicLib/graphicLibGateway.js"></script>
+		<script src="./js/graphicLib/graphicLibUtils.js"></script>
+		<script src="./testgraphicdata/dotdata.js"></script>
+		<style>
+			body{
+				
+				margin:1%
+			}
+			div{
+				width:80%;
+				//height:50vh;
+				border-style: solid;
+				display:block;
+				margin:auto;
+			}
+
+		</style>
+		<!-- <script src="./library/test.js"></script> -->
+	</head>
+	<body>
+		<div id="depthDot">1</div>
+		<div id="second">2</div>
+		<div id="yearly">3</div>
+		<div id ="seasonal"></div>
+		<div id="top10"></div>
+		<script>
+			
+		testinggeodata.forEach(function(feature){
+			if(feature.properties.time>(new Date("2016-10-1")).getTime()){
+			var newitem={};
+			newitem.lat=feature.geometry.coordinates[1];
+			newitem.lng=feature.geometry.coordinates[0];
+			newitem.mag=feature.properties.mag;
+			newitem.alert=feature.properties.alert;
+			newitem.place=feature.properties.place;
+			newitem.time=feature.properties.time;
+			dotgeodata.push(newitem);
+		}
+		});
+
+		testinggeodata.forEach(function(feature){
+			if(feature.properties.alert){
+			var newitem={};
+			newitem.depth=feature.geometry.coordinates[2];
+			newitem.time=feature.properties.time;
+			newitem.mag=feature.properties.mag;
+			newitem.alert=feature.properties.alert;
+			newitem.place=feature.properties.place;
+			dotdepthdata.push(newitem);}
+		});
+
+			
+			
+		console.log(testinggeodata[0]);
+		console.log(dotgeodata[0]);
+		console.log(dotdepthdata[0]);
+		console.log(GraphicChart.createDepthDotChart);
+			
+		GraphicChart.createDepthDotChart(dotdepthdata,"#depthDot",null,"depth diagram");
+		console.log(GraphicChart.charts[0]);
+			
+		GraphicChart.createGeoDotChart(dotgeodata,"#second",null,"geo diagram");
+			
+		window.addEventListener("resize",GraphicChart.update);
+
+
+		// var diagram2=new DotDiagram();
+		// console.log(diagram2.parseAlertsTimesMag)
+		// diagram2.render("./testdata/dotdata.json","#first",diagram2.parseAlertsTimesMag);
+		// var diagram1=new DotDiagram();
+		// diagram1.render("./testdata/dotdata.json","#second",diagram2.parseLatLngMag);
+		// window.addEventListener("resize",function(){diagram2.updateGraph();diagram1.updateGraph()});
+		// //diagram2.diagramSize(299,100).updateGraph();
+
+
+
+		</script> 
+		<script>
+			
+		</script>
+	</body>
+
+</html>
