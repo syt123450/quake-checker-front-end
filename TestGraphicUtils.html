@@ -55,7 +55,17 @@
 			newitem.place=feature.properties.place;
 			dotdepthdata.push(newitem);}
 		});
-
+		
+		var top10Data=[{country:'United States', counts:600},
+					  {country:'China', counts:400},
+					  {country:'Russia', counts:200},
+					  {country:'Japan', counts:200},
+					  {country:'United Kindom', counts:200},
+					  {country:'Indianisia', counts:200},
+					  {country:'blahblahblah', counts:200},
+					  {country:'blah1', counts:200},
+					  {country:'blah2', counts:200},
+					  {country:'blah3', counts:200}];
 			
 			
 		console.log(testinggeodata[0]);
@@ -70,7 +80,7 @@
 			
 		window.addEventListener("resize",GraphicChart.update);
 
-
+		GraphicChart.createTop10PieChart(top10Data,"#top10",null,"top 10");
 		// var diagram2=new DotDiagram();
 		// console.log(diagram2.parseAlertsTimesMag)
 		// diagram2.render("./testdata/dotdata.json","#first",diagram2.parseAlertsTimesMag);

@@ -90,22 +90,22 @@ GraphicChart.createGeoDotChart=function(data,parentSelector,margin,heading){
     geochart.render(geochart.geo);
 }
 
-///**
-// * Create pie chart base top 10 countries
-// */
-//GraphicChart.createTop10PieChart=function(data,parentSelector,margin,heading){
-//    var top10chart=new PieChart().data(data).container(parentSelector);
-//    	this.charts.push(top10chart);
-//    	if(margin){
-//    	    top10chart.margins(margin);
-//    	}
-//    	if(heading){
-//    		top10chart.heading(heading);
-//    	}
-//    geochart.render(top10chart.country);
-//}
-//
-//
+/**
+ * Create pie chart base top 10 countries
+ */
+GraphicChart.createTop10PieChart=function(data,parentSelector,margin,heading){
+    var top10chart=new PieChart().data(data).container(parentSelector);
+    	this.charts.push(top10chart);
+    	if(margin){
+    	    top10chart.margins(margin);
+    	}
+    	if(heading){
+    		top10chart.heading(heading);
+    	}
+    top10chart.render(top10chart.country);
+}
+
+
 //GraphicChart.createYearlyBarChart=function(data,parentSelector,margin,heading){
 //    var yearlychart= new BarDiagram().data(data).container(parentSelector)；
 //    this.charts.push(yearlychart);

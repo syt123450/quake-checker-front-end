@@ -99,9 +99,7 @@ ChartDiagram.prototype.container=function(parentSelector){
 
 ChartDiagram.prototype.createSVG=function(){
 		
-		console.log(this.gHeight(this))
-		//this.parent=d3.select(parentElement);
-	
+
 		this.width= Math.floor(parseFloat(this.parent.style('width')));
 		this.height= this.width/this.radio;
 		console.log("header:"+this.header);
@@ -132,7 +130,7 @@ ChartDiagram.prototype.update=function(){
 */
 var DotDiagram=function(){
 	ChartDiagram.call(this);
-	this.method;
+
 	this.opacity=0.6;
 	this.radius;
 	this.color={'null':"#666","red":"red","orange":"orange","yellow":"yellow","green":"green"};
@@ -237,6 +235,84 @@ DotDiagram.prototype.render=function(parseDataMethod){
 				//.attr("stroke",function(){if(properties&&properties.color)return properties.color; return dig.color;})
 				.attr("fill",color(this.color))
 			//create title for each dots
-			.append('title').html(function(d){var string=''; for(var pro in d){if(pro =='time'){var time=(new Date(d[pro])).toUTCString();string =string + pro +" : "+time+"<br>"}else string =string + pro +" : "+d[pro]+"<br>";console.log(string);} return string.substring(0,string.length-4);});
+			.append('title').html(function(d){var string=''; for(var pro in d){if(pro =='time'){var time=(new Date(d[pro])).toUTCString();string =string + pro +" : "+time+"<br>"}else string =string + pro +" : "+d[pro]+"<br>";} return string.substring(0,string.length-4);});
 }
 					  
+
+
+var PieChart = function(){
+	ChartDiagram.call(this);
+	//this.radio=1;
+	this.colors=["#ffff00","#ffcc44","#ff8888","#ff44cc","#ff00ff","#cc44ff","#8888ff","#44ccff","#00ffff","#44ffee"];
+	this.pie;
+	this.gradient;
+	this.radius;
+	this.pathD;
+}
+
+PieChart.prototype= Object.create(ChartDiagram.prototype);
+PieChart.prototype.constructor= PieChart;
+
+PieChart.prototype.createSVG=function(){
+	this.width= Math.floor(parseFloat(this.parent.style('width')));
+	this.height= this.width/this.radio;
+	console.log("header:"+this.header);
+	if(this.header){
+
+		this.parent.append('h4').attr("class",'diagramHeader').text(this.header);
+	}
+	this.svg=this.parent
+			.append("svg")
+				.attr("width",this.width)
+				.attr("height",this.height);
+	this.radius=this.height*0.4;
+	this.g = this.svg.append("g").attr("transform", "translate("+(this.margin.left+this.radius)+","+ (this.radius+this.margin.top)+")");
+	return this.g;
+}
+
+PieChart.prototype.country=function(){
+	this.pie=d3.pie()
+				.sort(null).value(function(d){return d.counts;});
+	this.gradient = this.g.append("defs")
+						.selectAll(".gradient")
+						.data(this.colors)
+						.enter()
+						.append("radialGradient")
+							.attr("id", function(d,i){return "gradient"+ i;})
+							.attr("gradientUnits","userSpaceOnUse")
+							.attr("cx",0)
+							.attr("cy",0)
+							.attr("r",this.radius*2.5)
+							.attr("spreadMethod","pad");
+	
+	this.gradient.append("stop")
+				.attr("offset","0%")
+				.attr("stop-color",function(d){return d;});
+	this.gradient.append("stop")
+				.attr("offset","30%")
+				.attr("stop-color",function(d){return d;})
+				.attr("stop-opacity",1);
+	this.gradient.append("stop")
+				.attr("offset","70%")
+				.attr("stop-color",function(d){return "white";})
+				.attr("stop-opacity",1);
+	this.pathD=function(radius){return(function(d){console.log(d);return d3.arc().outerRadius(radius).innerRadius(0)(d);});}
+}
+
+PieChart.prototype.render=function(method/*id,data,cx,cy,r*/){
+	
+	this.method=method;
+	this.createSVG()
+	this.method();
+
+	this.g.selectAll("g")
+		.data(this.pie(this.data))
+		.enter()
+
+		.append("path")
+			.attr("fill",function(d,i){return "url(#gradient"+i+")";})
+			.attr("d",this.pathD(this.radius)/*function(d){console.log(d);return d3.arc().outerRadius(this.radius).innerRadius(0)(d);}*/)
+			.each(function(d){this._current=d;})
+		.append("title")
+			.text(function(d){return d.country;});
+}
