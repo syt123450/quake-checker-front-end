@@ -93,7 +93,7 @@ GraphicChart.createGeoDotChart=function(data,parentSelector,margin,heading){
 ///**
 // * Create pie chart base top 10 countries
 // */
-//GraphicChart.prototype.createTop10PieChart=function(data,parentSelector,margin,heading){
+//GraphicChart.createTop10PieChart=function(data,parentSelector,margin,heading){
 //    var top10chart=new PieChart().data(data).container(parentSelector);
 //    	this.charts.push(top10chart);
 //    	if(margin){
@@ -106,7 +106,7 @@ GraphicChart.createGeoDotChart=function(data,parentSelector,margin,heading){
 //}
 //
 //
-//GraphicChart.prototype.createYearlyBarChart=function(data,parentSelector,margin,heading){
+//GraphicChart.createYearlyBarChart=function(data,parentSelector,margin,heading){
 //    var yearlychart= new BarDiagram().data(data).container(parentSelector)；
 //    this.charts.push(yearlychart);
 //    	if(margin){
@@ -118,7 +118,7 @@ GraphicChart.createGeoDotChart=function(data,parentSelector,margin,heading){
 //    yearlychart.render(yearlychart.yearly);
 //}
 //
-//GraphicChart.prototype.createSeasonalBarChart=function(data,parentSelector,margin,heading){
+//GraphicChart.createSeasonalBarChart=function(data,parentSelector,margin,heading){
 //    var seasonalchart= new BarDiagram().data(data).container(parentSelector)；
 //    this.charts.push(seasonalchart);
 //    	if(margin){
@@ -145,7 +145,7 @@ GraphicChart.update=function(){
 * remove all diagram
 */
 
-GraphicChart.prototype.removeAll=function(){
+GraphicChart.removeAll=function(){
 	this.charts.forEach(function(chart){
 		chart.remove();
 		delete(chart);
