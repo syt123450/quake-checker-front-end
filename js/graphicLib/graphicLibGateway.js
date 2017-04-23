@@ -9,7 +9,7 @@ mag:number,
 place：string,
 time:number, 
 alert:string, 
-depth:number ----geometry.coordinates[3]
+depth:number ----geometry.coordinates[2]
 
 },{}....... ]
 
@@ -21,7 +21,8 @@ mag:number,
 place:string,
 lat:number, 
 lng:number,
-alert:string
+alert:string,
+time:number
 
 },{}....... ]
 
@@ -48,21 +49,25 @@ alert:string
 
 */
 
-var GraphicChart=funciton(){
-	this.radio=1.6;// chart width/height
-	this.charts=[];
-	return this;
+var GraphicChart={
+	radio:1.6,// chart width/height
+	charts:[]
 }
+
 
 /**
  * Create dot base on depth and timeline
+ * Params: data: array of data objects;
+ *			parentSelector: a string used to select dom element(s)
+ *			margin(optional): a object to over write the default margin of svg element, it can contains any of the following properties: top, bottom, left, right
+ * 			heading(optional): a string of the header of the diagram
  */
 
-GraphicChart.prototype.createDepthDotChart=function(data,parentSelector,margin,heading){
+GraphicChart.createDepthDotChart=function(data,parentSelector,margin,heading){
 	var depthchart=new DotDiagram().data(data).container(parentSelector);
-	this.charts.push(depthchart);
+	GraphicChart.charts.push(depthchart);
 	if(margin){
-	    depthchart.margin(margin);
+	    depthchart.margins(margin);
 	}
 	if(heading){
 		depthchart.heading(heading);
@@ -73,11 +78,11 @@ GraphicChart.prototype.createDepthDotChart=function(data,parentSelector,margin,h
 /**
  * Create dot base on latitude and longitude
  */
-GraphicChart.prototype.createGeoDotChart=function(data,parentSelector,margin,heading){
+GraphicChart.createGeoDotChart=function(data,parentSelector,margin,heading){
     var geochart=new DotDiagram().data(data).container(parentSelector);
     	this.charts.push(geochart);
     	if(margin){
-    	    geochart.margin(margin);
+    	    geochart.margins(margin);
     	}
     	if(heading){
     		geochart.heading(heading);
@@ -85,53 +90,53 @@ GraphicChart.prototype.createGeoDotChart=function(data,parentSelector,margin,hea
     geochart.render(geochart.geo);
 }
 
-/**
- * Create pie chart base top 10 countries
- */
-GraphicChart.prototype.createTop10PieChart=function(data,parentSelector,margin,heading){
-    var top10chart=new PieChart().data(data).container(parentSelector);
-    	this.charts.push(top10chart);
-    	if(margin){
-    	    top10chart.margin(margin);
-    	}
-    	if(heading){
-    		top10chart.heading(heading);
-    	}
-    geochart.render(top10chart.country);
-}
-
-
-GraphicChart.prototype.createYearlyBarChart=function(data,parentSelector,margin,heading){
-    var yearlychart= new BarDiagram().data(data).container(parentSelector)；
-    this.charts.push(yearlychart);
-    	if(margin){
-    	    yearlychart.margin(margin);
-    	}
-    	if(heading){
-    		yearlychart.heading(heading);
-    	}
-    yearlychart.render(yearlychart.yearly);
-}
-
-GraphicChart.prototype.createSeasonalBarChart=function(data,parentSelector,margin,heading){
-    var seasonalchart= new BarDiagram().data(data).container(parentSelector)；
-    this.charts.push(seasonalchart);
-    	if(margin){
-    	    seasonalchart.margin(margin);
-    	}
-    	if(heading){
-    		seasonalchart.heading(heading);
-    	}
-    seasonalchart.render(seasonalchart.seasonal);
-}
-
-
+///**
+// * Create pie chart base top 10 countries
+// */
+//GraphicChart.prototype.createTop10PieChart=function(data,parentSelector,margin,heading){
+//    var top10chart=new PieChart().data(data).container(parentSelector);
+//    	this.charts.push(top10chart);
+//    	if(margin){
+//    	    top10chart.margins(margin);
+//    	}
+//    	if(heading){
+//    		top10chart.heading(heading);
+//    	}
+//    geochart.render(top10chart.country);
+//}
+//
+//
+//GraphicChart.prototype.createYearlyBarChart=function(data,parentSelector,margin,heading){
+//    var yearlychart= new BarDiagram().data(data).container(parentSelector)；
+//    this.charts.push(yearlychart);
+//    	if(margin){
+//    	    yearlychart.margin(margin);
+//    	}
+//    	if(heading){
+//    		yearlychart.heading(heading);
+//    	}
+//    yearlychart.render(yearlychart.yearly);
+//}
+//
+//GraphicChart.prototype.createSeasonalBarChart=function(data,parentSelector,margin,heading){
+//    var seasonalchart= new BarDiagram().data(data).container(parentSelector)；
+//    this.charts.push(seasonalchart);
+//    	if(margin){
+//    	    seasonalchart.margins(margin);
+//    	}
+//    	if(heading){
+//    		seasonalchart.heading(heading);
+//    	}
+//    seasonalchart.render(seasonalchart.seasonal);
+//}
+//
+//
 /**
  * update diagram size
  */
 
-GraphicChart.prototype.update=function(){
-	this.charts.forEach(function(chart){
+GraphicChart.update=function(){
+	GraphicChart.charts.forEach(function(chart){
 		chart.update();
 	});
 }
@@ -143,5 +148,6 @@ GraphicChart.prototype.update=function(){
 GraphicChart.prototype.removeAll=function(){
 	this.charts.forEach(function(chart){
 		chart.remove();
+		delete(chart);
 	});
 }
