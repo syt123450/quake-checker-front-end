@@ -21,28 +21,28 @@ var ChartDiagram = function(){
 
 	this.svg; // svg container
 
-	this.margin = {top:20, right:100, bottom:50, left: 50}; // should be avaible for outside
+	this.margin = {top:20, right:20, bottom:50, left: 50}; // should be avaible for outside
 	this.parent; //parent container
 	this.g; 
-	//this.x; // x-axis for d3
-	//this.y; //y axis for d3
-	//this.charts=[];
+
 	this.data;
 	this.header;
 	this.method;
+	this.haveSample=true;
+	this.sampleArea;
 
 }
 
 //set up graph width base on svg width and margin
 ChartDiagram.prototype.gWidth = function(){
-	//console.log(this.width - this.margin.left - this.margin.right);
+	console.log(this.haveSample);
+	if(this.haveSample)
+		return (this.width - this.margin.left - this.margin.right)*0.7;
 	return this.width - this.margin.left - this.margin.right;
 };
 
 //set up graph height base on svg height and margin
 ChartDiagram.prototype.gHeight=function(){
-//	console.log(this.height);
-//	console.log(this.height - this.margin.top - this.margin.bottom);
 	return this.height - this.margin.top - this.margin.bottom;
 };
 
@@ -77,7 +77,7 @@ ChartDiagram.prototype.margins=function(margin){
 ChartDiagram.prototype.heading=function(header){
 	if(header){
 		this.header=header;
-		console.log("on assignment header:"+this.header);
+		//console.log("on assignment header:"+this.header);
 		return this;
 	}
 	return this.header;
@@ -99,10 +99,10 @@ ChartDiagram.prototype.container=function(parentSelector){
 
 ChartDiagram.prototype.createSVG=function(){
 		
-
 		this.width= Math.floor(parseFloat(this.parent.style('width')));
+		
 		this.height= this.width/this.radio;
-		console.log("header:"+this.header);
+		
 		if(this.header){
 			
 			this.parent.append('h4').attr("class",'diagramHeader').text(this.header);
@@ -112,6 +112,11 @@ ChartDiagram.prototype.createSVG=function(){
 					.attr("width",this.width)
 					.attr("height",this.height);
 		this.g = this.svg.append("g").attr("transform", "translate("+this.margin.left+","+ this.margin.top+")");
+	
+		if(this.haveSample=true){
+			this.sampleArea = this.svg.append("g")
+								.attr("transform", "translate("+(this.margin.left+this.gWidth()*1.1)+","+ this.margin.top+")");
+		}
 		return this.g;
 };
 
@@ -124,6 +129,13 @@ ChartDiagram.prototype.update=function(){
 		this.remove();
 		this.render(this.method);
 };
+
+ChartDiagram.prototype.sample=function(haveSample){
+	this.haveSample=haveSample;
+	return this;
+}
+
+
 /**
 *Class for create dot diagream
 * ----------need to be update in the future to fit various situation
@@ -133,7 +145,7 @@ var DotDiagram=function(){
 
 	this.opacity=0.6;
 	this.radius;
-	this.color={'null':"#666","red":"red","orange":"orange","yellow":"yellow","green":"green"};
+	this.color={"red":"red","orange":"orange","yellow":"yellow","green":"green",'null':"#666"};
 	
 	this.xAxis;
 	this.yAxis;
@@ -161,14 +173,61 @@ DotDiagram.prototype.depth=function(){
 	this.xAxis.domain(d3.extent(this.data,function(d){return d.time;}));
 	this.yAxis.domain(d3.extent(this.data,function(d){return d.depth;}));
 	
-	this.cx=function(callback){return (function(d){console.log(callback);return callback(d.time);});};
+	this.cx=function(callback){return (function(d){return callback(d.time);});};
 	
-	this.cy=function(callback){return (function(d){console.log(callback);return callback(d.depth);});};
+	this.cy=function(callback){return (function(d){return callback(d.depth);});};
 	
 	this.cr=function(d){return Math.pow(d.mag,2)/4;};
 	
 	this.xHeader="Time";
 	this.yHeader="Depth";
+	console.log(this.gHeight()/14);
+//	if(this.sampleArea){
+//
+//		this.sampleArea
+//				.append("text")
+//					.attr("x",5).attr("y",this.gHeight()/14).text("Magnitude");
+//		var onelineHeight=this.gHeight()/14;
+//
+//		
+//		this.sampleArea.selectAll("icon1")
+//				.data([7,6,5,4]).enter()
+//				.append("circle")
+//					.attr("fill","#666eee")
+//					.attr("r", function(d){console.log(d);return Math.pow(d,2)/4;})
+//					.attr("cx",this.gWidth()/14)
+//					.attr("cy",function(d,i){return onelineHeight*(i+2);});
+//		this.sampleArea.selectAll("icontext1")
+//				.data([7,6,5,4]).enter()
+//				.append("text")
+//					.attr("x",this.gWidth()/7)
+//					.attr("y",function(d,i){return onelineHeight*(i+2)+2;}).text(function(d){return d;});
+//		function sampledata(color){
+//			var sample=[];
+//			console.log(color);
+//			for(var data in color){
+//				console.log(data);
+//				console.log(color[data]);
+//				sample.push({alert:data, color:color[data]});
+//			}
+//			console.log(sample);
+//			return sample;
+//		}
+//		var colorsample=sampledata(this.color);
+//		this.sampleArea
+//				.append("text")
+//					.attr("x",5).attr("y",this.gHeight()/2).text("Alert colors");
+//		this.sampleArea.selectAll("alerticon")
+//				.data(colorsample).enter()
+//				.append("circle").attr('fill',function(d){console.log(d);return d["color"];})
+//					.attr('r',9).attr("cx",this.gWidth()/14)
+//					.attr("cy",function(d,i){return onelineHeight*(i+8);}).attr("opacity","0.6");
+//		this.sampleArea.selectAll("alerttext")
+//				.data(colorsample).enter()
+//				.append("text")
+//					.attr("x",this.gWidth()/7)
+//					.attr("y",function(d,i){return onelineHeight*(i+8)+2;}).text(function(d){return d["alert"];});				
+//	}
 };
 
 
@@ -179,9 +238,9 @@ DotDiagram.prototype.geo=function(){
 	this.xAxis.domain(d3.extent(this.data,function(d){return d.lng;}));
 	this.yAxis.domain(d3.extent(this.data,function(d){return d.lat;}));
 	
-	this.cx=function(callback){return (function(d){console.log(callback);return callback(d.lng);});};
+	this.cx=function(callback){return (function(d){return callback(d.lng);});};
 	
-	this.cy=function(callback){return (function(d){console.log(callback);return callback(d.lat);});};
+	this.cy=function(callback){return (function(d){return callback(d.lat);});};
 	
 	this.cr=function(d){return Math.pow(d.mag,2)/4;};
 	
@@ -189,21 +248,68 @@ DotDiagram.prototype.geo=function(){
 	this.yHeader="Latitude";
 };
 
+DotDiagram.prototype.addSample=function(){
+	if(this.sampleArea){
 
+		this.sampleArea
+				.append("text")
+					.attr("x",5).attr("y",this.gHeight()/14).text("Magnitude");
+		var onelineHeight=this.gHeight()/14;
+
+		
+		this.sampleArea.selectAll("icon1")
+				.data([7,6,5,4]).enter()
+				.append("circle")
+					.attr("fill","#666eee")
+					.attr("r", function(d){console.log(d);return Math.pow(d,2)/4;})
+					.attr("cx",this.gWidth()/14)
+					.attr("cy",function(d,i){return onelineHeight*(i+2);});
+		this.sampleArea.selectAll("icontext1")
+				.data([7,6,5,4]).enter()
+				.append("text")
+					.attr("x",this.gWidth()/7)
+					.attr("y",function(d,i){return onelineHeight*(i+2)+2;}).text(function(d){return d;});
+		function sampledata(color){
+			var sample=[];
+			console.log(color);
+			for(var data in color){
+				console.log(data);
+				console.log(color[data]);
+				sample.push({alert:data, color:color[data]});
+			}
+			console.log(sample);
+			return sample;
+		}
+		var colorsample=sampledata(this.color);
+		this.sampleArea
+				.append("text")
+					.attr("x",5).attr("y",this.gHeight()/2).text("Alert colors");
+		this.sampleArea.selectAll("alerticon")
+				.data(colorsample).enter()
+				.append("circle").attr('fill',function(d){console.log(d);return d["color"];})
+					.attr('r',9).attr("cx",this.gWidth()/14)
+					.attr("cy",function(d,i){return onelineHeight*(i+8);}).attr("opacity","0.6");
+		this.sampleArea.selectAll("alerttext")
+				.data(colorsample).enter()
+				.append("text")
+					.attr("x",this.gWidth()/7)
+					.attr("y",function(d,i){return onelineHeight*(i+8)+2;}).text(function(d){return d["alert"];});				
+	}
+}
 /**
 * Creating svg from data 
 * 
 */
 DotDiagram.prototype.render=function(parseDataMethod){
 		this.method=parseDataMethod;
-		console.log(this.method);
+		//console.log(this.method);
 
 		var g = this.createSVG();
-
 		var groupHeight=this.gHeight();
 		var groupWidth=this.gWidth();
 		
 		this.method();
+		this.addSample();
 		var xAxis=this.xAxis;
 		var color=function(colors){return(function(d){return colors[d.alert];});};
 
@@ -233,9 +339,9 @@ DotDiagram.prototype.render=function(parseDataMethod){
 				.attr("cx", this.cx(this.xAxis))
 				.attr("cy", this.cy(this.yAxis))
 				.attr("opacity",this.opacity)
-				//.attr("stroke",function(){if(properties&&properties.color)return properties.color; return dig.color;})
+
 				.attr("fill",color(this.color))
-			//create title for each dots
+
 			.append('title').html(function(d){var string=''; for(var pro in d){if(pro =='time'){var time=(new Date(d[pro])).toUTCString();string =string + pro +" : "+time+"<br>"}else string =string + pro +" : "+d[pro]+"<br>";} return string.substring(0,string.length-4);});
 };
 					  
@@ -257,7 +363,7 @@ PieChart.prototype.constructor= PieChart;
 PieChart.prototype.createSVG=function(){
 	this.width= Math.floor(parseFloat(this.parent.style('width')));
 	this.height= this.width/this.radio;
-	console.log("header:"+this.header);
+	
 	if(this.header){
 
 		this.parent.append('h4').attr("class",'diagramHeader').text(this.header);
@@ -268,9 +374,34 @@ PieChart.prototype.createSVG=function(){
 				.attr("height",this.height);
 	this.radius=this.height*0.4;
 	this.g = this.svg.append("g").attr("transform", "translate("+(this.margin.left+this.radius)+","+ (this.radius+this.margin.top)+")");
+	if(this.haveSample=true){
+		this.sampleArea = this.svg.append("g")
+							.attr("transform", "translate("+(this.margin.left+this.gWidth())+","+ this.margin.top+")");
+	}
 	return this.g;
 };
 
+PieChart.prototype.addSample=function(){
+	console.log(this.sampleArea)
+	if(this.sampleArea){
+		
+		this.sampleArea
+				.append("text")
+					.attr("x",5).attr("y",this.gHeight()/14).text("Country");
+		var onelineHeight=this.gHeight()/14;
+
+		this.sampleArea.selectAll("alerticon")
+				.data(this.colors).enter()
+				.append("circle").attr('fill',function(d){console.log(d);return d;})
+					.attr('r',9).attr("cx",this.gWidth()/14)
+					.attr("cy",function(d,i){return onelineHeight*(i+3);})//.attr("opacity","0.6");
+		this.sampleArea.selectAll("alerttext")
+				.data(this.data).enter()
+				.append("text")
+					.attr("x",this.gWidth()/7)
+					.attr("y",function(d,i){return onelineHeight*(i+3)+2;}).text(function(d){return d.country;});				
+	}
+}
 PieChart.prototype.country=function(){
 	this.pie=d3.pie()
 				.sort(null).value(function(d){return d.counts;});
@@ -297,25 +428,37 @@ PieChart.prototype.country=function(){
 				.attr("offset","70%")
 				.attr("stop-color",function(d){return "white";})
 				.attr("stop-opacity",1);
-	this.pathD=function(radius){return(function(d){console.log(d);return d3.arc().outerRadius(radius).innerRadius(0)(d);});}
+	this.pathD=function(radius){return(function(d){return d3.arc().outerRadius(radius).innerRadius(0)(d);});}
+	
 };
 
-PieChart.prototype.render=function(method/*id,data,cx,cy,r*/){
+PieChart.prototype.render=function(method){
 	
 	this.method=method;
-	this.createSVG()
+	this.createSVG();
+	this.addSample();
 	this.method();
-
+	
+	var mouseover=function(data){return(function(d,i){
+						
+						d3.select(this).style("stroke-width", 5).style("stroke","blue");
+						d3.select("body")
+								.append("div").attr("class","info").style("left",event.clientX+"px").style("top",event.clientY+"px")//.style("position","absolute")
+								.html(data[i].country+"<br>"+data[i].counts);
+					});}
+	
 	this.g.selectAll("g")
 		.data(this.pie(this.data))
 		.enter()
 
 		.append("path")
+			.attr("id",function(d,i){return "pieseg"+i;})
 			.attr("fill",function(d,i){return "url(#gradient"+i+")";})
 			.attr("d",this.pathD(this.radius)/*function(d){console.log(d);return d3.arc().outerRadius(this.radius).innerRadius(0)(d);}*/)
 			.each(function(d){this._current=d;})
-		.append("title")
-			.text(function(d){return d.country;});
+				.on("mouseover",mouseover(this.data))
+				.on("mouseout",function(d,i){console.log(i);d3.select(this).style("stroke-width", 0); d3.select(".info").remove()});
+
 };
 
 
@@ -328,6 +471,7 @@ var BarDiagram=function(){
 	this.bHeight;
 	this.changeColor;
 	this.id;
+	this.haveSample=false;
 };
 
 BarDiagram.prototype= Object.create(ChartDiagram.prototype);
@@ -384,28 +528,11 @@ BarDiagram.prototype.render=function(method){
 	var groupHeight=this.gHeight();
 	var groupWidth=this.gWidth();
 	this.method();
-//	var x=d3.scaleBand().rangeRound([0,groupWidth]).padding(0.1);
-//	var y=d3.scaleLinear().rangeRound([groupHeight,0]);
-
-
-//	var valueline = d3.line()
-//    .x(function(d,i) { console.log(x(d.month)+','+i);return x(d.month)+x.bandwidth()/2; })
-//    .y(function(d) { return y(d.counts); });
-
-
-	//d3.json(dataAPI,function(data){
-	//	x.domain(data.map(function(d){return d.month}));
-		//x2.domain(data.map(function(d){return d.month}));
-	//	y.domain([0,d3.max(data,function(d){return d.counts;})]);
 
 		g.append("g")
 			.attr("class","axis axis--x")
 			.attr("transform","translate(0,"+groupHeight+")")
 			.call(d3.axisBottom(this.xAxis))
-
-
-
-
 
 		g.append("g")
 				.attr("class","axis axis--y")
@@ -430,11 +557,5 @@ BarDiagram.prototype.render=function(method){
 					.on("mouseover",this.changeColor("red"))
 					.on("mouseout",this.changeColor(this.color));
 	
-//		    g.append("path")
-//		        .attr("class", "line")
-//		        .attr("d", valueline(data))
-//		        .attr("fill","none")
-//		        .attr("stroke","black")
-//		        .attr("stroke-width","2");
-	//});
+
 }

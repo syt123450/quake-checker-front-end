@@ -20,16 +20,22 @@
 				display:block;
 				margin:auto;
 			}
+			.info{
+				position:absolute;
+				border-style:hidden;
+				background-color: "white";
+			}
 
 		</style>
 		<!-- <script src="./library/test.js"></script> -->
 	</head>
 	<body>
+		<div id="top10"></div>
 		<div id="depthDot">1</div>
 		<div id="second">2</div>
 		<div id="yearly">3</div>
 		<div id ="seasonal"></div>
-		<div id="top10"></div>
+
 		<script>
 			
 		testinggeodata.forEach(function(feature){
@@ -98,7 +104,7 @@
 		console.log(GraphicChart.createYearlyBarChart);
 			
 		GraphicChart.createDepthDotChart(dotdepthdata,"#depthDot",null,"depth diagram");
-		console.log(GraphicChart.charts[0]);
+		//console.log(GraphicChart.charts[0]);
 			
 		GraphicChart.createGeoDotChart(dotgeodata,"#second",null,"geo diagram");
 			
