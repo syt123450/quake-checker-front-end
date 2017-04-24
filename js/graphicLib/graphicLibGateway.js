@@ -80,7 +80,7 @@ GraphicChart.createDepthDotChart=function(data,parentSelector,margin,heading){
  */
 GraphicChart.createGeoDotChart=function(data,parentSelector,margin,heading){
     var geochart=new DotDiagram().data(data).container(parentSelector);
-    	this.charts.push(geochart);
+    GraphicChart.charts.push(geochart);
     	if(margin){
     	    geochart.margins(margin);
     	}
@@ -95,7 +95,7 @@ GraphicChart.createGeoDotChart=function(data,parentSelector,margin,heading){
  */
 GraphicChart.createTop10PieChart=function(data,parentSelector,margin,heading){
     var top10chart=new PieChart().data(data).container(parentSelector);
-    	this.charts.push(top10chart);
+    GraphicChart.charts.push(top10chart);
     	if(margin){
     	    top10chart.margins(margin);
     	}
@@ -106,31 +106,32 @@ GraphicChart.createTop10PieChart=function(data,parentSelector,margin,heading){
 }
 
 
-//GraphicChart.createYearlyBarChart=function(data,parentSelector,margin,heading){
-//    var yearlychart= new BarDiagram().data(data).container(parentSelector)；
-//    this.charts.push(yearlychart);
-//    	if(margin){
-//    	    yearlychart.margin(margin);
-//    	}
-//    	if(heading){
-//    		yearlychart.heading(heading);
-//    	}
-//    yearlychart.render(yearlychart.yearly);
-//}
-//
-//GraphicChart.createSeasonalBarChart=function(data,parentSelector,margin,heading){
-//    var seasonalchart= new BarDiagram().data(data).container(parentSelector)；
-//    this.charts.push(seasonalchart);
-//    	if(margin){
-//    	    seasonalchart.margins(margin);
-//    	}
-//    	if(heading){
-//    		seasonalchart.heading(heading);
-//    	}
-//    seasonalchart.render(seasonalchart.seasonal);
-//}
-//
-//
+GraphicChart.createYearlyBarChart=function(data,parentSelector,margin,heading){
+	
+    var yearlychart= new BarDiagram().data(data).container(parentSelector);
+    GraphicChart.charts.push(yearlychart);
+    	if(margin){
+    	    yearlychart.margin(margin);
+    	}
+    	if(heading){
+    		yearlychart.heading(heading);
+    	}
+    yearlychart.render(yearlychart.yearly);
+}
+
+GraphicChart.createSeasonalBarChart=function(data,parentSelector,margin,heading){
+    var seasonalchart= new BarDiagram().data(data).container(parentSelector);
+    this.charts.push(seasonalchart);
+    	if(margin){
+    	    seasonalchart.margins(margin);
+    	}
+    	if(heading){
+    		seasonalchart.heading(heading);
+    	}
+    seasonalchart.render(seasonalchart.seasonal);
+}
+
+
 /**
  * update diagram size
  */

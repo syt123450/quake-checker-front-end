@@ -9,7 +9,7 @@
 
 //base class for diagram
 var ChartDiagram = function(){
-	this.color = "red";
+	this.color = "#4444ff";
 	this.backgroundColor = "#000000";
 	this.fillingColor = "#666";
 
@@ -54,24 +54,24 @@ ChartDiagram.prototype.data=function(data){
 
 ChartDiagram.prototype.margins=function(margin){
 	
-		if(margin){
-			if(margin.top){
-				this.margin.top=margin.top;
-			}
-			if(margin.right){
-				this.margin.top=margin.right;
-			}
-			if(margin.bottom){
-				this.margin.top=margin.bottom;
-			}
-			if(margin.left){
-				this.margin.top=margin.left;
-			}
-			
-			return this;
+	if(margin){
+		if(margin.top){
+			this.margin.top=margin.top;
 		}
-		return this.margin;
+		if(margin.right){
+			this.margin.top=margin.right;
+		}
+		if(margin.bottom){
+			this.margin.top=margin.bottom;
+		}
+		if(margin.left){
+			this.margin.top=margin.left;
+		}
+
+		return this;
 	}
+	return this.margin;
+};
 
 
 ChartDiagram.prototype.heading=function(header){
@@ -81,7 +81,7 @@ ChartDiagram.prototype.heading=function(header){
 		return this;
 	}
 	return this.header;
-}
+};
 
 
 ChartDiagram.prototype.container=function(parentSelector){
@@ -113,17 +113,17 @@ ChartDiagram.prototype.createSVG=function(){
 					.attr("height",this.height);
 		this.g = this.svg.append("g").attr("transform", "translate("+this.margin.left+","+ this.margin.top+")");
 		return this.g;
-}
+};
 
 ChartDiagram.prototype.remove=function(){
 		this.parent.select(".diagramHeader").remove();
 		this.svg.remove();
-}
+};
 
 ChartDiagram.prototype.update=function(){
 		this.remove();
 		this.render(this.method);
-}
+};
 /**
 *Class for create dot diagream
 * ----------need to be update in the future to fit various situation
@@ -143,7 +143,8 @@ var DotDiagram=function(){
 	this.xHeader;
 	this.yHeader;
 
-}
+};
+
 DotDiagram.prototype = Object.create(ChartDiagram.prototype);
 DotDiagram.prototype.constructor=DotDiagram;
 
@@ -168,7 +169,7 @@ DotDiagram.prototype.depth=function(){
 	
 	this.xHeader="Time";
 	this.yHeader="Depth";
-}
+};
 
 
 DotDiagram.prototype.geo=function(){
@@ -186,7 +187,7 @@ DotDiagram.prototype.geo=function(){
 	
 	this.xHeader="Longitude";
 	this.yHeader="Latitude";
-}
+};
 
 
 /**
@@ -236,7 +237,7 @@ DotDiagram.prototype.render=function(parseDataMethod){
 				.attr("fill",color(this.color))
 			//create title for each dots
 			.append('title').html(function(d){var string=''; for(var pro in d){if(pro =='time'){var time=(new Date(d[pro])).toUTCString();string =string + pro +" : "+time+"<br>"}else string =string + pro +" : "+d[pro]+"<br>";} return string.substring(0,string.length-4);});
-}
+};
 					  
 
 
@@ -248,7 +249,7 @@ var PieChart = function(){
 	this.gradient;
 	this.radius;
 	this.pathD;
-}
+};
 
 PieChart.prototype= Object.create(ChartDiagram.prototype);
 PieChart.prototype.constructor= PieChart;
@@ -268,7 +269,7 @@ PieChart.prototype.createSVG=function(){
 	this.radius=this.height*0.4;
 	this.g = this.svg.append("g").attr("transform", "translate("+(this.margin.left+this.radius)+","+ (this.radius+this.margin.top)+")");
 	return this.g;
-}
+};
 
 PieChart.prototype.country=function(){
 	this.pie=d3.pie()
@@ -297,7 +298,7 @@ PieChart.prototype.country=function(){
 				.attr("stop-color",function(d){return "white";})
 				.attr("stop-opacity",1);
 	this.pathD=function(radius){return(function(d){console.log(d);return d3.arc().outerRadius(radius).innerRadius(0)(d);});}
-}
+};
 
 PieChart.prototype.render=function(method/*id,data,cx,cy,r*/){
 	
@@ -315,4 +316,125 @@ PieChart.prototype.render=function(method/*id,data,cx,cy,r*/){
 			.each(function(d){this._current=d;})
 		.append("title")
 			.text(function(d){return d.country;});
+};
+
+
+var BarDiagram=function(){
+	ChartDiagram.call(this);
+	this.xAxis;
+	this.yAxis;
+	this.cx;
+	this.cy;
+	this.bHeight;
+	this.changeColor;
+	this.id;
+};
+
+BarDiagram.prototype= Object.create(ChartDiagram.prototype);
+BarDiagram.prototype.constructor= BarDiagram;
+
+
+BarDiagram.prototype.yearly=function(){
+	this.xAxis=d3.scaleBand().rangeRound([0,this.gWidth()]).padding(0.2);
+	this.yAxis=d3.scaleLinear().rangeRound([this.gHeight(),0]);
+	this.xAxis.domain(this.data.map(function(d){return d.month}));
+	this.yAxis.domain([0,d3.max(this.data,function(d){return d.counts;})]);
+	
+	this.cx=function(callback){return (function(d){return callback(d.month);});};
+	
+	this.cy=function(callback){return (function(d){return callback(d.counts);});};
+	this.bHeight=function(groupHeight,callback){return(function(d){ return groupHeight-callback(d.counts);})};
+	
+	this.changeColor=function(color){
+			return(
+				function(d){d3.select("#"+d.month)
+										.attr("fill",color);}
+				  )
+	};
+	this.id=function(d){return d.month;};
+	this.xHeader="Month";
+	this.yHeader="Counts";
+};
+
+BarDiagram.prototype.seasonal=function(){
+	this.xAxis=d3.scaleBand().rangeRound([0,this.gWidth()]).padding(0.2);
+	this.yAxis=d3.scaleLinear().rangeRound([this.gHeight(),0]);
+	this.xAxis.domain(this.data.map(function(d){return d.dayrange}));
+	this.yAxis.domain([0,d3.max(this.data,function(d){return d.counts;})]);
+	
+	this.cx=function(callback){return (function(d){return callback(d.dayrange);});};
+	
+	this.cy=function(callback){return (function(d){return callback(d.counts);});};
+	this.bHeight=function(groupHeight,callback){return(function(d){ return groupHeight-callback(d.counts);})};
+	
+	this.changeColor=function(color){
+			return(
+				function(d,i){d3.select("#seasonalbar"+i)
+										.attr("fill",color);}
+				  )
+	};
+	this.id=function(d,i){return "seasonalbar"+i;};
+	this.xHeader="Day Range";
+	this.yHeader="Counts";
+}
+
+BarDiagram.prototype.render=function(method){
+	this.method=method;
+	var g = this.createSVG();
+	var groupHeight=this.gHeight();
+	var groupWidth=this.gWidth();
+	this.method();
+//	var x=d3.scaleBand().rangeRound([0,groupWidth]).padding(0.1);
+//	var y=d3.scaleLinear().rangeRound([groupHeight,0]);
+
+
+//	var valueline = d3.line()
+//    .x(function(d,i) { console.log(x(d.month)+','+i);return x(d.month)+x.bandwidth()/2; })
+//    .y(function(d) { return y(d.counts); });
+
+
+	//d3.json(dataAPI,function(data){
+	//	x.domain(data.map(function(d){return d.month}));
+		//x2.domain(data.map(function(d){return d.month}));
+	//	y.domain([0,d3.max(data,function(d){return d.counts;})]);
+
+		g.append("g")
+			.attr("class","axis axis--x")
+			.attr("transform","translate(0,"+groupHeight+")")
+			.call(d3.axisBottom(this.xAxis))
+
+
+
+
+
+		g.append("g")
+				.attr("class","axis axis--y")
+				.call(d3.axisLeft(this.yAxis))
+			.append("text")
+				.attr("transform","rotate(-90)")
+				.attr("dy","0.71rem")
+				.attr("text-anchor","end")
+				.text("counts");
+
+
+		g.selectAll(".bar").data(this.data)
+			.enter()
+			.append("rect")
+				.attr("class","bar")
+				.attr("id",this.id)
+				.attr("x",this.cx(this.xAxis))//function(d){return x(d.month);})
+				.attr("y",this.cy(this.yAxis))//function(d){return y(d.counts);})
+				.attr("width",this.xAxis.bandwidth())
+				.attr("height",this.bHeight(groupHeight,this.yAxis))//function(d){ return groupHeight-y(d.counts);})
+				.attr("fill",this.color)
+					.on("mouseover",this.changeColor("red"))
+					.on("mouseout",this.changeColor(this.color));
+	
+//		    g.append("path")
+//		        .attr("class", "line")
+//		        .attr("d", valueline(data))
+//		        .attr("fill","none")
+//		        .attr("stroke","black")
+//		        .attr("stroke-width","2");
+	//});
 }
