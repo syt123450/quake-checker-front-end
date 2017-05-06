@@ -72,13 +72,15 @@ GraphicChart.createDepthDotChart=function(data,parentSelector,margin,heading){
 	if(heading){
 		depthchart.heading(heading);
 	}
-	depthchart.render(depthchart.depth);
+	depthchart.method(depthchart.depth);
+	depthchart.render();
+	return depthchart;
 }
 
 /**
  * Create dot base on latitude and longitude
  */
-GraphicChart.createGeoDotChart=function(data,parentSelector,margin,heading){
+GraphicChart.createGeoDotChart=function(data,parentSelector,margin,heading,country_abbr){
     var geochart=new DotDiagram().data(data).container(parentSelector);
     GraphicChart.charts.push(geochart);
     	if(margin){
@@ -87,7 +89,16 @@ GraphicChart.createGeoDotChart=function(data,parentSelector,margin,heading){
     	if(heading){
     		geochart.heading(heading);
     	}
-    geochart.render(geochart.geo);
+    geochart.method(geochart.geo);
+     geochart.render();
+
+    if(country_abbr){
+        geochart.addMap(country_abbr);
+    }else{
+        geochart.render();
+    }
+    return geochart;
+
 }
 
 /**
@@ -102,7 +113,10 @@ GraphicChart.createTop10PieChart=function(data,parentSelector,margin,heading){
     	if(heading){
     		top10chart.heading(heading);
     	}
-    top10chart.render(top10chart.country);
+    top10chart.method(top10chart.country);
+    top10chart.render();
+    return top10chart;
+
 }
 
 
@@ -116,7 +130,10 @@ GraphicChart.createYearlyBarChart=function(data,parentSelector,margin,heading){
     	if(heading){
     		yearlychart.heading(heading);
     	}
-    yearlychart.render(yearlychart.yearly);
+	yearlychart.sample(false);
+    yearlychart.method(yearlychart.yearly);
+    yearlychart.render();
+    return yearlychart;
 }
 
 GraphicChart.createSeasonalBarChart=function(data,parentSelector,margin,heading){
@@ -128,7 +145,10 @@ GraphicChart.createSeasonalBarChart=function(data,parentSelector,margin,heading)
     	if(heading){
     		seasonalchart.heading(heading);
     	}
-    seasonalchart.render(seasonalchart.seasonal);
+	seasonalchart.sample(false);
+    seasonalchart.method(seasonalchart.seasonal);
+    seasonalchart.render();
+    return seasonalchart;
 }
 
 
@@ -147,8 +167,11 @@ GraphicChart.update=function(){
 */
 
 GraphicChart.removeAll=function(){
-	this.charts.forEach(function(chart){
+	GraphicChart.charts.forEach(function(chart){
 		chart.remove();
 		delete(chart);
 	});
+	GraphicChart.charts=[];
 }
+
+
