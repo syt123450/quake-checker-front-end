@@ -3,7 +3,7 @@
  */
 
 
-function buildEarthModel(width,height,localizationLog) {
+function buildEarthModel(width,height,localizationLog,length) {
     
     var Detector = {
 
@@ -53,7 +53,7 @@ function buildEarthModel(width,height,localizationLog) {
 	document.body.appendChild(renderer.domElement);
 	
 	//var scene = new THREE.Scene();
-	var camera = new THREE.PerspectiveCamera(45, width/height, 0.1, 1000);
+	var camera = new THREE.PerspectiveCamera(45 + length , width/height, 0.1, 1000);
 	
 	var earth = new Earth();
     
@@ -64,8 +64,11 @@ function buildEarthModel(width,height,localizationLog) {
 	earth.createObject(localizationLog);
 
 	//scene.add(earth.object);
-	
-  	earth.scene.add(new THREE.AmbientLight(0xffffff,0.001));
+	var Singletonlight = (function(){
+         return new THREE.AmbientLight(0xffffff,0.001); 
+    })();
+    
+  	earth.scene.add(Singletonlight);
 	
 	//earth.addAxisHelper(earth.mesh, 4);
 	//earth.addAxisHelper(earth.object,5);
@@ -91,7 +94,7 @@ function buildEarthModel(width,height,localizationLog) {
 };
 
 
-var Earth=function(){
+var Earth = function(){
 	
 	var vSegments = 128,
 		hSegments=128,
