@@ -1,37 +1,143 @@
 <!doctype html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Earth</title>
-	<style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earth</title>
+    <style>
         /*html{width: 100%; height: 100%;}*/
-		/*body { width: 100%; height: 100%;margin: 0; overflow: hidden; background-color: #000; }*/
+        /*body { width: 100%; height: 100%;margin: 0; overflow: hidden; background-color: #000; }*/
         /*#webgl {*/
-            /*width: 100px;*/
-            /*height: 100px;*/
+        /*width: 100px;*/
+        /*height: 100px;*/
         /*}*/
-		/*.webgl-error { font: 15px/30px monospace; text-align: center; color: #fff; margin: 50px; }*/
-		/*.webgl-error a { color: #fff; }*/
+        /*.webgl-error { font: 15px/30px monospace; text-align: center; color: #fff; margin: 50px; }*/
+        /*.webgl-error a { color: #fff; }*/
 
     </style>
 
-	<script src="js/resource/jquery.min.js"></script>
+    <script src="js/resource/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/resource/bootstrap.min.js"></script>
     <script src="js/resource/three.min.js"></script>
-	<script src="js/resource/TrackballControls.js"></script>
+    <script src="js/resource/TrackballControls.js"></script>
 
-	<link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/index.css">
 
-	<script src="js/threeLib/threeLibUtils.js"></script>
+    <script src="./js/resource/d3.min.js"></script>
+    <script src="js/threeLib/threeLibUtils.js"></script>
     <script src="js/threeLib/threeLibGateway.js"></script>
-	<script src="js/graphicLib/graphicLibUtils.js"></script>
-	<script src="js/graphicLib/graphicLibGateway.js"></script>
-	<script src="js/index.js"></script>
-    
+    <script src="js/graphicLib/graphicLibUtils.js"></script>
+    <script src="js/graphicLib/graphicLibGateway.js"></script>
+    <script src="js/index.js"></script>
+    <script src="testgraphicdata/dotdata.js"></script>
+
 </head>
 <body>
-	
-    <div id="webgl"></div>
+
+<aside>
+    <h2>Target Country: </h2>
+    <input type="text" placeholder="Country">
+    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal">
+        See Info
+    </button>
+    <button class="btn btn-primary btn-lg">
+        6 Famous Earthquake
+    </button>
+    <button class="btn btn-primary btn-lg">
+        About Us
+    </button>
+</aside>
+
+<div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="modalLabel">
+                    Country Earthquake Analysis
+                </h4>
+            </div>
+            <div id="chartArea" class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="language">
+    <select name="type" title="Select Language">
+        <option value="">Language</option>
+        <option value="english">English</option>
+        <option value="chinese">Chinese</option>
+    </select>
+</div>
+
+<div id="webgl"></div>
 
 </body>
+
+<script>
+
+    var top10Data=[{country:'United States', counts:600},
+        {country:'China', counts:400},
+        {country:'Russia', counts:200},
+        {country:'Japan', counts:200},
+        {country:'United Kindom', counts:200},
+        {country:'Indianisia', counts:200},
+        {country:'blahblahblah', counts:200},
+        {country:'blah1', counts:200},
+        {country:'blah2', counts:200},
+        {country:'blah3', counts:200}];
+
+    GraphicChart.createTop10PieChart(top10Data,"#chartArea",null,"top 10");
+
+//var yearlydata=[
+//    {month:"Jan",counts:300},
+//    {month:"Feb",counts:340},
+//    {month:"Mar",counts:500},
+//    {month:"Apr",counts:366},
+//    {month:"May",counts:500},
+//    {month:"Jun",counts:345},
+//    {month:"Jul",counts:390},
+//    {month:"Aug",counts:600},
+//    {month:"Sep",counts:432},
+//    {month:"Oct",counts:501},
+//    {month:"Nov",counts:600},
+//    {month:"Dev",counts:483}
+//];
+//
+//GraphicChart.createYearlyBarChart(yearlydata,"#chartArea", null," yearly report");
+
+//var seasonaldata=[
+//    {dayrange:"1/1-1/10",counts:390},
+//    {dayrange:"1/11-1/20",counts:300},
+//    {dayrange:"1/21-1/30",counts:320},
+//    {dayrange:"1/31-2/9",counts:308},
+//    {dayrange:"2/10-2/19",counts:330},
+//    {dayrange:"2/20-3/1",counts:350},
+//    {dayrange:"3/2-3/11",counts:500},
+//    {dayrange:"3/12-3/21",counts:300},
+//    {dayrange:"3/22-3/31",counts:300}
+//];
+//
+//GraphicChart.createSeasonalBarChart(seasonaldata,"#chartArea", null," seasonal report");
+
+
+//testinggeodata.forEach(function(feature){
+//    if(feature.properties.alert){
+//        var newitem={};
+//        newitem.depth=feature.geometry.coordinates[2];
+//        newitem.time=feature.properties.time;
+//        newitem.mag=feature.properties.mag;
+//        newitem.alert=feature.properties.alert;
+//        newitem.place=feature.properties.place;
+//        dotdepthdata.push(newitem);}
+//});
+//
+//GraphicChart.createDepthDotChart(dotdepthdata,"#chartArea",null,"depth diagram");
+
+</script>
+
 </html>
