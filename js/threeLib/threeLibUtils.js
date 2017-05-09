@@ -142,7 +142,7 @@ Earth.prototype.createObject=function(localizationLog){
 	this.object.rotateZ(-Math.PI*23.5/180);
 	this.scene.add(this.object);
     var theta = (localizationLog+180)*(Math.PI/180);
-    this.object.rotateY(- theta + Math.PI/2 );
+    this.mesh.rotateY(- theta + Math.PI/2 );
 	//this.scene.add(this.camera);
 	//console.log(this);
 	
@@ -175,7 +175,7 @@ Earth.prototype.addDot=function(dotInfo){
 Earth.prototype.removeDot = function(number){
 	for(var i=0; i<number; i++){
 		var removeDot = this.earthquakeDots[0];
-		this.mesh.remove(removeDot);
+		this.mesh.remove(removeDot.object);
 		this.earthquakeDots[0]
 		delete removeDot;
 		delete this.earthquakeDots[0];
@@ -244,10 +244,10 @@ Dot.prototype.animation=function(){
 	
 	return (function(){
 		
-		if(dotGeo.vertices[0].z >-0.006){
+		if(dotGeo.vertices[0].z >-0.008){
 		dotGeo.vertices.forEach(function(vertice){
-			vertice.x= vertice.x*1.01;
-			vertice.y= vertice.y*1.01;
+			vertice.x= vertice.x*1.03;
+			vertice.y= vertice.y*1.03;
 			vertice.z -=.001;
 			
 		})
@@ -255,7 +255,7 @@ Dot.prototype.animation=function(){
 			dotGeo.vertices.forEach(function(vertice,i){
 			vertice.x= vertice.x/1.01/1.01/1.01;
 			vertice.y= vertice.y/1.01/1.01/1.01;
-			vertice.z +=0.006;
+			vertice.z +=0.008;
 			
 		})
 		}
