@@ -46,8 +46,18 @@ aside button.btn {
     top: 50px;
     left: 400px;
     width: 600px;
-    border: 1px solid #ff6600;
+    /*border: 1px solid #ff6600;*/
     box-sizing: border-box;
+}
+
+#modal2 {
+    position: absolute;
+    top: 50px;
+    left: 400px;
+    width: 600px;
+    /*border: 1px solid #ff6600;*/
+    box-sizing: border-box;
+    
 }
 
 #language {
