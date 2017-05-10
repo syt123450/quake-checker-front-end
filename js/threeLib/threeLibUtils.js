@@ -50,7 +50,7 @@ function buildEarthModel(width,height,localizationLog,length) {
 	
 	var renderer = new THREE.WebGLRenderer();
 	renderer.setSize(width, height);
-	document.body.appendChild(renderer.domElement);
+    webglEl.appendChild(renderer.domElement);
 	
 	//var scene = new THREE.Scene();
 	var camera = new THREE.PerspectiveCamera(45 + length , width/height, 0.1, 1000);
