@@ -23,6 +23,7 @@
     <script src="js/resource/TrackballControls.js"></script>
 
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/popout.css">
 
     <script src="./js/resource/d3.min.js"></script>
     <script src="js/threeLib/threeLibUtils.js"></script>
@@ -31,6 +32,7 @@
     <script src="js/graphicLib/graphicLibGateway.js"></script>
     <script src="js/index.js"></script>
     <script src="testgraphicdata/dotdata.js"></script>
+    <script src="./js/resource/popout.js"></script>
 
 </head>
 <body>
@@ -38,13 +40,13 @@
 <aside>
     <h2>Target Country: </h2>
     <input type="text" placeholder="Country">
-    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal">
+    <button id="button1" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal">
         See Info
     </button>
-    <button class="btn btn-primary btn-lg">
+    <button id="button2" class="btn btn-primary btn-lg">
         6 Famous Earthquake
     </button>
-    <button class="btn btn-primary btn-lg">
+    <button id="button3" class="btn btn-primary btn-lg">
         About Us
     </button>
 </aside>
@@ -139,5 +141,29 @@
 //GraphicChart.createDepthDotChart(dotdepthdata,"#chartArea",null,"depth diagram");
 
 </script>
+
+<div id="div2">
+   
+     <div align="right" style="background-color:#CDCDCD;"><span id="span7" style="cursor:pointer">close</span>
+
+    </div>
+
+    <form >
+   <div class="imgcontainer">
+    <img class="inner" accesskey=""src="../img/1.png" alt="Avatar" class="avatar">
+   </div>
+
+  <div class="introcontainer">
+
+  <h2>Roman	Roberson</h2>
+  <h3>Board Chairman and CEO</h3>
+  <p>Roman	Roberson is board chairman and CEO. He is responsible for company's global business, including more than 1,800 U.S. stores, more than 320,000 team members and millions of guests.Roman leads the retailer’s executive leadership team in accelerating company’s performance, advancing its digital evolution and delivering on its "Expect More. Pay Less." promise to guests.</p>
+  </div>
+    </form>
+</div>
+
+<div id="div3">
+    
+</div>
 
 </html>
