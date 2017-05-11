@@ -57,8 +57,8 @@ aside button.btn:hover {
     color: #ff6600;
 }
 
-#modal, #modal2, #modal3{
-    position: absolute;
+#modal{
+     position: absolute;
     top: 50px;
     margin-left: 100px;
     width: 100%;
@@ -67,6 +67,24 @@ aside button.btn:hover {
     height: 650px;
     overflow: scroll;
     z-index: 9999;
+    
+} 
+
+#modal2, #modal3{
+    position: absolute;
+    top: 50px;
+    margin-left: 100px;
+    width: 100%;
+    /*border: 1px solid #ff6600;*/
+    /*box-sizing: border-box;*/
+    height: 650px;
+    overflow: scroll;
+    z-index: 9999;
+    /*background-color: #333333;*/
+}
+
+#modalLabel,#about,#famous{
+    color: #FF6600;
 }
 
 /*#modal2 {
@@ -89,15 +107,21 @@ aside button.btn:hover {
 .modal .modal-body{
     height: 500px;
     overflow: scroll;
+    background-color: #333333;
+    color:#CCCCCC;
     
 }
 .modal2 .modal-body{
     height: 500px;
     overflow: scroll;
+    background-color: #333333;
+    color:#CCCCCC;
 }
 .modal3 .modal-body{
     height: 500px;
     overflow: scroll;
+    background-color: #333333;
+    color:#CCCCCC;
 }
 
 
