@@ -21,6 +21,11 @@ aside {
     padding: 30px 10px;
     box-sizing: border-box;
     pointer-events: auto;
+    display: none;
+}
+
+aside img {
+    width: 30%;
 }
 
 aside h2 {
@@ -41,9 +46,17 @@ aside input {
     color: #fff;
 }
 
-::-moz-placeholder { color: #ccc; }
-::-webkit-input-placeholder { color:#ccc; }
-:-ms-input-placeholder { color:#ccc; }
+::-moz-placeholder {
+    color: #ccc;
+}
+
+::-webkit-input-placeholder {
+    color: #ccc;
+}
+
+:-ms-input-placeholder {
+    color: #ccc;
+}
 
 aside button.btn {
     margin-top: 20px;
@@ -57,8 +70,13 @@ aside button.btn:hover {
     color: #ff6600;
 }
 
-#modal{
-     position: absolute;
+aside button.btn:focus {
+    background-color: #666;
+    color: #ff6600;
+}
+
+#modal {
+    position: absolute;
     top: 50px;
     margin-left: 100px;
     width: 100%;
@@ -67,10 +85,10 @@ aside button.btn:hover {
     height: 650px;
     overflow: scroll;
     z-index: 9999;
-    
-} 
 
-#modal2, #modal3{
+}
+
+#modal2, #modal3 {
     position: absolute;
     top: 50px;
     margin-left: 100px;
@@ -83,7 +101,7 @@ aside button.btn:hover {
     /*background-color: #333333;*/
 }
 
-#modalLabel,#about,#famous{
+#modalLabel, #about, #famous {
     color: #FF6600;
 }
 
@@ -104,56 +122,26 @@ aside button.btn:hover {
     box-sizing: border-box;
 
 }*/
-.modal .modal-body{
+.modal .modal-body {
+    height: 500px;
+    overflow: scroll;
+    color: #CCCCCC;
+
+}
+
+.modal2 .modal-body {
     height: 500px;
     overflow: scroll;
     background-color: #333333;
-    color:#CCCCCC;
-    
+    color: #CCCCCC;
 }
-.modal2 .modal-body{
+
+.modal3 .modal-body {
     height: 500px;
     overflow: scroll;
     background-color: #333333;
-    color:#CCCCCC;
+    color: #CCCCCC;
 }
-.modal3 .modal-body{
-    height: 500px;
-    overflow: scroll;
-    background-color: #333333;
-    color:#CCCCCC;
-}
-
-
-@media screen and (max-width: 400px) {
-   aside{
-      left: 50px; 
-       
-    }
-   #modal,#modal2,#modal3{
-       width:100%;
-       margin-left: 0px;
-       z-index: 9999;
-    }
-    
-    #chartArea {
-       margin-left:0px;
-       width: 100%;
-   }
-    .modal .modal-body {
-       width:100%;
-       margin-left: 0px;
-    }
-    .modal2 .modal-body{
-       width: 100%;
-       margin-left: 0px;
-    }
-    .modal3 .modal-body{
-       width: 100%;
-       margin-left: 0px;
-    }
-}
-
 
 #language {
     position: absolute;
@@ -161,7 +149,7 @@ aside button.btn:hover {
     right: 100px;
     width: 120px;
     height: 30px;
-    display: inline-block;
+    display: none;
 }
 
 #chartArea {
@@ -274,7 +262,34 @@ select:focus {
     color: #ccc;
 }
 
-@media (max-width: 400px) {
+@media screen and (max-width: 400px) {
+
+    #modal, #modal2, #modal3 {
+        width: 100%;
+        margin-left: 0;
+        z-index: 9999;
+    }
+
+    #chartArea {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .modal .modal-body {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .modal2 .modal-body {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .modal3 .modal-body {
+        width: 100%;
+        margin-left: 0;
+    }
+
     #webgl {
         margin-left: 0;
         width: 100%;

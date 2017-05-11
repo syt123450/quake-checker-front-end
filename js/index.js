@@ -5,17 +5,85 @@
 $(function() {
 
     if (document.body.clientWidth < 400) {
-        $("aside").hide();
         $("#language").hide();
         $("#smallIcon").show();
+        bindSmallEvent();
         relocatedCameraForMobile();
         buildEnvironment(window.innerWidth, window.innerHeight, test_data());
     } else {
+        $("aside").show();
+        $("#language").show();
+        bindEvent();
+        renderEnglishAsideNav();
+        renderEnglishModalTitle();
         buildEnvironment(window.innerWidth * 0.8, window.innerHeight, test_data());
     }
 
+    $("#language select").on("change", function () {
+        language = $(this).val();
+        changeLanguage();
+    });
+
+});
+
+function renderEnglishModalTitle() {
+    $("#modal .modal-title").text(modalTitle.english.header1);
+    $("#modal2 .modal-title").text(modalTitle.english.header2);
+    $("#modal3 .modal-title").text(modalTitle.english.header3);
+}
+
+function renderChineseModalTitle() {
+    $("#modal .modal-title").text(modalTitle.chinese.header1);
+    $("#modal2 .modal-title").text(modalTitle.chinese.header2);
+    $("#modal3 .modal-title").text(modalTitle.chinese.header3);
+}
+
+function renderEnglishAsideNav() {
+    $("aside h2").text(navText.english.title);
+    $("aside input").attr("placeholder", navText.english.placeholder);
+    $("#button1").text(navText.english.button1);
+    $("#button2").text(navText.english.button2);
+    $("#button3").text(navText.english.button3);
+}
+
+function renderChineseAsideNav() {
+    $("aside h2").text(navText.chinese.title);
+    $("aside input").attr("placeholder", navText.chinese.placeholder);
+    $("#button1").text(navText.chinese.button1);
+    $("#button2").text(navText.chinese.button2);
+    $("#button3").text(navText.chinese.button3);
+}
+
+function changeLanguage() {
+    if (language == "chinese") {
+        renderChineseAsideNav();
+        renderChineseModalTitle();
+    } else {
+        renderEnglishAsideNav();
+        renderEnglishModalTitle();
+    }
+}
+
+function bindEvent() {
+    $("#button1").click(function() {
+       $("#modal2").hide();
+       $("#modal3").hide();
+    });
+
+    $("#button2").click(function() {
+        $("#modal").hide();
+        $("#modal3").hide();
+    });
+
+    $("#button3").click(function() {
+        $("#modal").hide();
+        $("#modal2").hide();
+    });
+}
+
+function bindSmallEvent() {
     $("#smallIcon").click(function() {
-        $("#hideNav").show();
+        $("#hideNav").slideDown();
         $("#curtain").show();
     });
 
@@ -23,7 +91,22 @@ $(function() {
         $("#hideNav").hide();
         $("#curtain").hide();
     });
-});
+
+    $("#smallButton1").click(function() {
+        $("#hideNav").hide();
+        $("#curtain").hide();
+    });
+
+    $("#smallButton2").click(function() {
+        $("#hideNav").hide();
+        $("#curtain").hide();
+    });
+
+    $("#smallButton3").click(function() {
+        $("#hideNav").hide();
+        $("#curtain").hide();
+    });
+}
 
 String.prototype.format = function () {
     var args = [].slice.call(arguments);
