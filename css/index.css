@@ -13,10 +13,10 @@ aside {
     left: 90px;
     top: 100px;
     width: 300px;
-    z-index: 9998;
+    z-index: 10000;
     border: 1px solid #ff6600;
     border-radius: 10px;
-    background-color: #333333;
+    background-color: #333;
     text-align: center;
     padding: 30px 10px;
     box-sizing: border-box;
@@ -216,6 +216,37 @@ select:focus {
 #webgl {
     margin-left: 20%;
     width: 80%;
+}
+
+#modal .modal-header, #modal2 .modal-header, #modal3 .modal-header {
+    background: #000;
+    border: 1px solid #ff6600;
+    color: #ff6600;
+}
+
+#modal .modal-content {
+    border: 1px solid #ff6600;
+}
+
+#modal .modal-header button {
+    color: #ff6600;
+}
+
+#modal2 .modal-header button, #modal3 .modal-header button {
+    color: #ff6600;
+}
+
+#modal2 .modal-body, #modal3 .modal-body {
+    background-color: #333;
+    border: 1px solid #ff6600;
+}
+
+#modal2 .modal-body h5 a, #modal3 .modal-body h5 a {
+    color: #ff6600;
+}
+
+#modal2 .modal-body p, #modal3 .modal-body p {
+    color: #ccc;
 }
 
 @media (max-width: 400px) {
