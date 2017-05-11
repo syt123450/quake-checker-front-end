@@ -13,7 +13,7 @@ aside {
     left: 90px;
     top: 100px;
     width: 300px;
-    z-index: 10000;
+    z-index: 9998;
     border: 1px solid #ff6600;
     border-radius: 10px;
     background-color: #333333;
@@ -60,12 +60,13 @@ aside button.btn:hover {
 #modal, #modal2, #modal3{
     position: absolute;
     top: 50px;
-    left: 100px;
-    width: 600px;
+    margin-left: 50px;
+    width: 400px;
     /*border: 1px solid #ff6600;*/
     /*box-sizing: border-box;*/
     height: 650px;
     overflow: scroll;
+    z-index: 9999;
 }
 
 /*#modal2 {
@@ -87,40 +88,45 @@ aside button.btn:hover {
 
 }*/
 .modal .modal-body{
-    height: 550px;
+    height: 500px;
     overflow: scroll;
+    
 }
 .modal2 .modal-body{
-    height: 550px;
+    height: 500px;
     overflow: scroll;
 }
 .modal3 .modal-body{
-    height: 550px;
+    height: 500px;
     overflow: scroll;
 }
 
-@media screen and (min-width: 400px) {
-    
+@media only screen and (min-width: 400px) {
+   aside{
+      left: 50px; 
+       
+    }
    #modal,#modal2,#modal3{
        width:100%;
        margin-left: 0px;
+       z-index: 9999;
     }
     
     #chartArea {
-    margin-left:0px;
-    width: 100%;
+       margin-left:0px;
+       width: 100%;
    }
     .modal .modal-body {
-        width:100%;
-        margin-left: 0px;
+       width:100%;
+       margin-left: 0px;
     }
     .modal2 .modal-body{
-        width: 100%;
-        margin-left: 0px;
+       width: 100%;
+       margin-left: 0px;
     }
-      .modal3 .modal-body{
-        width: 100%;
-        margin-left: 0px;
+    .modal3 .modal-body{
+       width: 100%;
+       margin-left: 0px;
     }
 }
 
