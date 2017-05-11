@@ -223,6 +223,7 @@ function Dot(lat,lon,mag,dep){
 	this.material.opacity=0.7;
 	this.material.needUpdate=true;
 	this.mesh = new THREE.Mesh(this.geo,this.material);
+	this.mesh.position.z=-0.001;
 	var object = new THREE.Object3D(); 
 	object.add(this.mesh);
 	this.object=object;
@@ -241,10 +242,10 @@ Dot.prototype.animation=function(){
 	var dotGeo=this.geo;
 	//console.log(dotGeo.vertices);
 	var startPositons=this.verticesPos;;
-	var radio=1.03;
+	var radio=1.1;
 	return (function(){
 		
-		if(dotGeo.vertices[0].z > -0.003){
+		if(dotGeo.vertices[0].z > -0.0045){
 		dotGeo.vertices.forEach(function(vertice){
 			vertice.x= vertice.x*radio;
 			vertice.y= vertice.y*radio;
