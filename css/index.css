@@ -60,10 +60,10 @@ aside button.btn:hover {
 #modal, #modal2, #modal3{
     position: absolute;
     top: 50px;
-    margin-left: 50px;
-    width: 400px;
+    margin-left: 100px;
+    width: 100%;
     /*border: 1px solid #ff6600;*/
-    /*box-sizing: border-box;*/
+    box-sizing: border-box;
     height: 650px;
     overflow: scroll;
     z-index: 9999;
@@ -76,7 +76,6 @@ aside button.btn:hover {
     width: 600px;
     border: 1px solid #ff6600;
     box-sizing: border-box;
-
 }
 #modal3 {
     position: absolute;
@@ -101,7 +100,8 @@ aside button.btn:hover {
     overflow: scroll;
 }
 
-@media only screen and (min-width: 400px) {
+
+@media screen and (max-width: 400px) {
    aside{
       left: 50px; 
        
@@ -129,6 +129,7 @@ aside button.btn:hover {
        margin-left: 0px;
     }
 }
+
 
 #language {
     position: absolute;
