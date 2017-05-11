@@ -238,6 +238,7 @@
             newitem.mag=feature.properties.mag;
             newitem.alert=feature.properties.alert;
             newitem.place=feature.properties.place;
+			
             dotdepthdata.push(newitem);}
     });
 
@@ -250,6 +251,7 @@
             newitem.alert=feature.properties.alert;
             newitem.place=feature.properties.place;
             newitem.time=feature.properties.time;
+			newitem.iso3="JPN";
             dotgeodata.push(newitem);
         }
     });
@@ -263,7 +265,31 @@
         "yearData": "/API/yearData",
         "depthData": "/API/depthData"
     };
-
+	
+	var Global_Country_Name = "Japan";
+	
+	////-----global variable for test language -------
+	var language ="english";
+	////-------------------------------------------
+	
+	var chartHeading={
+		"top10":{
+			"chinese":"十大地震高发国家",
+			"english":"TOP 10 COUNTRIES"
+		},
+		"dotData":{
+			"chinese":"地震分布图",
+			"english":"EARTHQUAKE GEO MAP"
+		},
+		"yearData":{
+			"chinese":"过去12个月地震次数",
+			"english":"EARTHQUAKE FREQUENCE IN PAST 12 MONTHS"
+		},
+		"depthData":{
+			"chinese":"地震深度图",
+			"english":"EARTHQUAKE DEPTH MAP"
+		}
+	}
     var top10Data = [{country: 'United States', counts: 600},
         {country: 'China', counts: 400},
         {country: 'Russia', counts: 200},
@@ -277,7 +303,21 @@
 
     GraphicChart.createGeoDotChart(dotgeodata,"#chartArea",null,"geo diagram","JPN");
 //    GraphicChart.createTop10PieChart(top10Data, "#chartArea", null, "top 10");
-
+	
+	var getDiagramData =function(url,method,inputData,chartCreation,heading){
+		$.ajax({
+			url: url,
+			type: method?method:"GET",
+			contentType: "application/json; charset=utf-8",
+			async: true,
+			data: data,//JSON.stringify({"countryName": Global_Country_Name}),
+			dataType: 'json',
+			success: function (data) {
+				chartCreation(data,"#chartArea",null,heading,data[0].iso3);
+			}
+		});
+	}
+	
     function renderPage(pageNumber) {
 //        $.ajax({
 //            url: '../store/product',
@@ -298,13 +338,34 @@
         GraphicChart.removeAll();
 
         if (pageNumber == 1) {
-            GraphicChart.createGeoDotChart(dotgeodata,"#chartArea",null,"geo diagram","JPN");
+
+			getDiagramData(dataLink.dotData,
+						   "POST",
+						   JSON.stringify({"countryName": Global_Country_Name}),
+						   GraphicChart.createGeoDotChart,
+						   chartHeading.dotData[language]);
+           // GraphicChart.createGeoDotChart(dotgeodata,"#chartArea",null,"geo diagram","JPN");
         } else if (pageNumber == 2) {
-            GraphicChart.createDepthDotChart(dotdepthdata,"#chartArea",null,"depth diagram");
+			getDiagramData(dataLink.depthData,
+						   "POST",
+						   JSON.stringify({"countryName": Global_Country_Name}),
+						   GraphicChart.createDepthDotChart,
+						   chartHeading.depthData[language]);
+           // GraphicChart.createDepthDotChart(dotdepthdata,"#chartArea",null,"depth diagram");
         } else if (pageNumber == 3) {
-            GraphicChart.createTop10PieChart(top10Data, "#chartArea", null, "top 10");
+			getDiagramData(dataLink.top10,
+						   "GET",
+						   null,
+						   GraphicChart.createTop10PieChart,
+						   chartHeading.top10[language]);
+            //GraphicChart.createTop10PieChart(top10Data, "#chartArea", null, "top 10");
         } else {
-            GraphicChart.createYearlyBarChart(yearlydata,"#chartArea", null," yearly report");
+			getDiagramData(dataLink.yearData,
+						   "POST",
+						   JSON.stringify({"countryName": Global_Country_Name}),
+						   GraphicChart.createYearlyBarChart,
+						   chartHeading.yearData[language]);
+            //GraphicChart.createYearlyBarChart(yearlydata,"#chartArea", null," yearly report");
         }
 
         renderPagination(20, pageNumber);
