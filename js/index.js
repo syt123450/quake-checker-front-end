@@ -16,6 +16,8 @@ $(function() {
         bindEvent();
         renderEnglishAsideNav();
         renderEnglishModalTitle();
+        renderEnglishLanguageChooseArea();
+        renderEnglishHistoryEarthquakeText();
         buildEnvironment(window.innerWidth * 0.8, window.innerHeight, test_data());
     }
 
@@ -27,15 +29,15 @@ $(function() {
 });
 
 function renderEnglishModalTitle() {
-    $("#modal .modal-title").text(modalTitle.english.header1);
-    $("#modal2 .modal-title").text(modalTitle.english.header2);
-    $("#modal3 .modal-title").text(modalTitle.english.header3);
+    $("#modal .modal-title").text(modalTitleText.english.header1);
+    $("#modal2 .modal-title").text(modalTitleText.english.header2);
+    $("#modal3 .modal-title").text(modalTitleText.english.header3);
 }
 
 function renderChineseModalTitle() {
-    $("#modal .modal-title").text(modalTitle.chinese.header1);
-    $("#modal2 .modal-title").text(modalTitle.chinese.header2);
-    $("#modal3 .modal-title").text(modalTitle.chinese.header3);
+    $("#modal .modal-title").text(modalTitleText.chinese.header1);
+    $("#modal2 .modal-title").text(modalTitleText.chinese.header2);
+    $("#modal3 .modal-title").text(modalTitleText.chinese.header3);
 }
 
 function renderEnglishAsideNav() {
@@ -54,13 +56,57 @@ function renderChineseAsideNav() {
     $("#button3").text(navText.chinese.button3);
 }
 
+function renderEnglishLanguageChooseArea() {
+    $("#language option[value='']").text(languageChooseAreaText.english.hint);
+    $("#language option[value='english']").text(languageChooseAreaText.english.english);
+    $("#language option[value='chinese']").text(languageChooseAreaText.english.chinese);
+}
+
+function renderChineseLanguageChooseArea() {
+    $("#language option[value='']").text(languageChooseAreaText.chinese.hint);
+    $("#language option[value='english']").text(languageChooseAreaText.chinese.english);
+    $("#language option[value='chinese']").text(languageChooseAreaText.chinese.chinese);
+}
+
+function renderEnglishHistoryEarthquakeText() {
+    $("#modal2 .modal-body h5 a:eq(0)").text(historyEarthquakeText.english[0].title);
+    $("#modal2 .modal-body p:eq(0)").text(historyEarthquakeText.english[0].content);
+    $("#modal2 .modal-body h5 a:eq(1)").text(historyEarthquakeText.english[1].title);
+    $("#modal2 .modal-body p:eq(1)").text(historyEarthquakeText.english[1].content);
+    $("#modal2 .modal-body h5 a:eq(2)").text(historyEarthquakeText.english[2].title);
+    $("#modal2 .modal-body p:eq(2)").text(historyEarthquakeText.english[2].content);
+    $("#modal2 .modal-body h5 a:eq(3)").text(historyEarthquakeText.english[3].title);
+    $("#modal2 .modal-body p:eq(3)").text(historyEarthquakeText.english[3].content);
+    $("#modal2 .modal-body h5 a:eq(4)").text(historyEarthquakeText.english[4].title);
+    $("#modal2 .modal-body p:eq(4)").text(historyEarthquakeText.english[4].content);
+}
+
+function renderChineseHistoryEarthquakeText() {
+    $("#modal2 .modal-body h5 a:eq(0)").text(historyEarthquakeText.chinese[0].title);
+    $("#modal2 .modal-body p:eq(0)").text(historyEarthquakeText.chinese[0].content);
+    $("#modal2 .modal-body h5 a:eq(1)").text(historyEarthquakeText.chinese[1].title);
+    $("#modal2 .modal-body p:eq(1)").text(historyEarthquakeText.chinese[1].content);
+    $("#modal2 .modal-body h5 a:eq(2)").text(historyEarthquakeText.chinese[2].title);
+    $("#modal2 .modal-body p:eq(2)").text(historyEarthquakeText.chinese[2].content);
+    $("#modal2 .modal-body h5 a:eq(3)").text(historyEarthquakeText.chinese[3].title);
+    $("#modal2 .modal-body p:eq(3)").text(historyEarthquakeText.chinese[3].content);
+    $("#modal2 .modal-body h5 a:eq(4)").text(historyEarthquakeText.chinese[4].title);
+    $("#modal2 .modal-body p:eq(4)").text(historyEarthquakeText.chinese[4].content);
+}
+
 function changeLanguage() {
     if (language == "chinese") {
         renderChineseAsideNav();
         renderChineseModalTitle();
-    } else {
+        renderChineseLanguageChooseArea();
+        renderChineseHistoryEarthquakeText();
+    } else if (language == "english") {
         renderEnglishAsideNav();
         renderEnglishModalTitle();
+        renderEnglishLanguageChooseArea();
+        renderEnglishHistoryEarthquakeText();
+    } else {
+
     }
 }
 
