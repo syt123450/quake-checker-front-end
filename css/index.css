@@ -4,6 +4,10 @@ html, body {
     position: relative;
 }
 
+body {
+    background: url("../img/galaxy_starfield.png");
+}
+
 aside {
     position: absolute;
     left: 70px;

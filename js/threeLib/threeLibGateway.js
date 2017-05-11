@@ -3,7 +3,7 @@
  */
 function buildEnvironment(){
      
- var width= window.innerWidth;
+ var width= window.innerWidth * 0.8;
  var height= window.innerHeight;
  var localizationLog = -87.62;//longitude of Chicago
  var length = 10;
