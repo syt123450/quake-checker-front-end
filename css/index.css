@@ -10,12 +10,12 @@ body {
 
 aside {
     position: absolute;
-    left: 70px;
+    left: 90px;
     top: 100px;
     width: 300px;
     z-index: 10000;
     border: 1px solid #ff6600;
-    border-radius: 40px;
+    border-radius: 10px;
     background-color: #333333;
     text-align: center;
     padding: 30px 10px;
@@ -28,21 +28,33 @@ aside h2 {
     width: 100%;
     text-align: center;
     font-weight: bold;
+    margin-bottom: 40px;
 }
 
 aside input {
     width: 100%;
     height: 40px;
-    color: black;
     border-radius: 5px;
     border: 1px solid #ff6600;
     text-align: center;
+    background-color: #666;
+    color: #fff;
 }
+
+::-moz-placeholder { color: #ccc; }
+::-webkit-input-placeholder { color:#ccc; }
+:-ms-input-placeholder { color:#ccc; }
 
 aside button.btn {
     margin-top: 20px;
     width: 100%;
     border: 1px solid #ff6600;
+    background-color: #000;
+}
+
+aside button.btn:hover {
+    background-color: #666;
+    color: #ff6600;
 }
 
 #modal {
@@ -95,14 +107,14 @@ select {
     height: 30px;
     line-height: 30px;
     text-indent: 4px;
-    box-shadow: inset 0 0 3px #606060;
+    box-shadow: inset 0 0 3px #ff6600;
     border: 1px solid #acacac;
     border-radius: 6px;
     font-family: Arial, Calibri, Tahoma, Verdana, sans-serif;
     font-size: 14px;
     font-weight: 500;
     box-sizing: border-box;
-    color: #000099;
+    color: #000;
     cursor: pointer;
     outline: none;
 }
@@ -122,7 +134,7 @@ select:hover {
 }
 
 select:focus {
-    box-shadow: inset 0 0 5px #000099;
+    box-shadow: inset 0 0 5px #ff6600;
     font-weight: 600;
 }
 
@@ -136,7 +148,7 @@ select:focus {
     height: 30px;
     line-height: 30px;
     text-align: center;
-    background: #000099;
+    background: #666;
     color: #fefefe;
     border-radius: 0 6px 6px 0;
     pointer-events: none;

@@ -16,6 +16,7 @@
 
     </style>
 
+    <link rel='icon' href='img/logo_black.ico' type=‘image/x-ico’>
     <script src="js/resource/jquery.min.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <script src="js/resource/bootstrap.min.js"></script>
@@ -38,13 +39,14 @@
 <body>
 
 <aside>
-    <h2>Target Country: </h2>
+    <img style="width: 60px;" src="img/logo.png">
+    <h2>Search Country</h2>
     <input type="text" placeholder="Country">
     <button id="button1" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal">
         See Info
     </button>
     <button id="button2" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal2">
-        6 Famous Earthquake
+        Famous Earthquake
     </button>
     <button id="button3" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal3">
         About Us
@@ -182,7 +184,39 @@
 
 <script>
 
-    renderPagination(100, 1);
+    testinggeodata.forEach(function(feature){
+        if(feature.properties.alert){
+            var newitem={};
+            newitem.depth=feature.geometry.coordinates[2];
+            newitem.time=feature.properties.time;
+            newitem.mag=feature.properties.mag;
+            newitem.alert=feature.properties.alert;
+            newitem.place=feature.properties.place;
+            dotdepthdata.push(newitem);}
+    });
+
+    testinggeodata.forEach(function(feature){
+        if(feature.properties.time>(new Date("2016-10-1")).getTime()){
+            var newitem={};
+            newitem.lat=feature.geometry.coordinates[1];
+            newitem.lng=feature.geometry.coordinates[0];
+            newitem.mag=feature.properties.mag;
+            newitem.alert=feature.properties.alert;
+            newitem.place=feature.properties.place;
+            newitem.time=feature.properties.time;
+            dotgeodata.push(newitem);
+        }
+    });
+
+    renderPagination(20, 1);
+
+    var dataLink = {
+        "onload": "/API/Initialize",
+        "top10": "/API/top10",
+        "dotData": "/API/DotData",
+        "yearData": "/API/yearData",
+        "depthData": "/API/depthData"
+    };
 
     var top10Data = [{country: 'United States', counts: 600},
         {country: 'China', counts: 400},
@@ -195,8 +229,8 @@
         {country: 'blah2', counts: 200},
         {country: 'blah3', counts: 200}];
 
-    GraphicChart.createTop10PieChart(top10Data, "#chartArea", null, "top 10");
-
+    GraphicChart.createGeoDotChart(dotgeodata,"#chartArea",null,"geo diagram","JPN");
+//    GraphicChart.createTop10PieChart(top10Data, "#chartArea", null, "top 10");
 
     function renderPage(pageNumber) {
 //        $.ajax({
@@ -214,52 +248,52 @@
 //                bindLink();
 //            }
 //        });
-        renderPagination(100, pageNumber);
 
+        GraphicChart.removeAll();
+
+        if (pageNumber == 1) {
+            GraphicChart.createGeoDotChart(dotgeodata,"#chartArea",null,"geo diagram","JPN");
+        } else if (pageNumber == 2) {
+            GraphicChart.createDepthDotChart(dotdepthdata,"#chartArea",null,"depth diagram");
+        } else if (pageNumber == 3) {
+            GraphicChart.createTop10PieChart(top10Data, "#chartArea", null, "top 10");
+        } else {
+            GraphicChart.createYearlyBarChart(yearlydata,"#chartArea", null," yearly report");
+        }
+
+        renderPagination(20, pageNumber);
     }
 
-    //var yearlydata=[
-    //    {month:"Jan",counts:300},
-    //    {month:"Feb",counts:340},
-    //    {month:"Mar",counts:500},
-    //    {month:"Apr",counts:366},
-    //    {month:"May",counts:500},
-    //    {month:"Jun",counts:345},
-    //    {month:"Jul",counts:390},
-    //    {month:"Aug",counts:600},
-    //    {month:"Sep",counts:432},
-    //    {month:"Oct",counts:501},
-    //    {month:"Nov",counts:600},
-    //    {month:"Dev",counts:483}
-    //];
+    var yearlydata=[
+        {month:"Jan",counts:300},
+        {month:"Feb",counts:340},
+        {month:"Mar",counts:500},
+        {month:"Apr",counts:366},
+        {month:"May",counts:500},
+        {month:"Jun",counts:345},
+        {month:"Jul",counts:390},
+        {month:"Aug",counts:600},
+        {month:"Sep",counts:432},
+        {month:"Oct",counts:501},
+        {month:"Nov",counts:600},
+        {month:"Dev",counts:483}
+    ];
     //
     //GraphicChart.createYearlyBarChart(yearlydata,"#chartArea", null," yearly report");
 
-    //var seasonaldata=[
-    //    {dayrange:"1/1-1/10",counts:390},
-    //    {dayrange:"1/11-1/20",counts:300},
-    //    {dayrange:"1/21-1/30",counts:320},
-    //    {dayrange:"1/31-2/9",counts:308},
-    //    {dayrange:"2/10-2/19",counts:330},
-    //    {dayrange:"2/20-3/1",counts:350},
-    //    {dayrange:"3/2-3/11",counts:500},
-    //    {dayrange:"3/12-3/21",counts:300},
-    //    {dayrange:"3/22-3/31",counts:300}
-    //];
+    var seasonaldata=[
+        {dayrange:"1/1-1/10",counts:390},
+        {dayrange:"1/11-1/20",counts:300},
+        {dayrange:"1/21-1/30",counts:320},
+        {dayrange:"1/31-2/9",counts:308},
+        {dayrange:"2/10-2/19",counts:330},
+        {dayrange:"2/20-3/1",counts:350},
+        {dayrange:"3/2-3/11",counts:500},
+        {dayrange:"3/12-3/21",counts:300},
+        {dayrange:"3/22-3/31",counts:300}
+    ];
     //
     //GraphicChart.createSeasonalBarChart(seasonaldata,"#chartArea", null," seasonal report");
-
-
-    //testinggeodata.forEach(function(feature){
-    //    if(feature.properties.alert){
-    //        var newitem={};
-    //        newitem.depth=feature.geometry.coordinates[2];
-    //        newitem.time=feature.properties.time;
-    //        newitem.mag=feature.properties.mag;
-    //        newitem.alert=feature.properties.alert;
-    //        newitem.place=feature.properties.place;
-    //        dotdepthdata.push(newitem);}
-    //});
     //
     //GraphicChart.createDepthDotChart(dotdepthdata,"#chartArea",null,"depth diagram");
 

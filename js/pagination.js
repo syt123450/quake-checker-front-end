@@ -235,7 +235,7 @@ function render4Pagination(pageNumber) {
             grid2A.innerHTML = "...";
             grid2A.setAttribute("class", "unactive-button");
             grid3A.innerHTML = "3";
-            grid3A.setAttribute("onclick", "now-button");
+            grid3A.setAttribute("onclick", "renderPage(3)");
             grid4A.innerHTML = "4";
             grid4A.setAttribute("class", "now-button");
             nextButtonA.setAttribute("class", "unactive-button");
