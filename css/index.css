@@ -141,3 +141,20 @@ select:focus {
     border-radius: 0 6px 6px 0;
     pointer-events: none;
 }
+
+#pagination li a {
+    cursor: pointer;
+    color: black;
+}
+
+#pagination li a.now-button {
+    background-color: #ff6600;
+    color: #FFF;
+    cursor: auto;
+}
+
+#pagination li a.unactive-button {
+    background-color: #FFF;
+    color: #AAA;
+    cursor: auto;
+}

@@ -31,8 +31,8 @@
     <script src="js/graphicLib/graphicLibUtils.js"></script>
     <script src="js/graphicLib/graphicLibGateway.js"></script>
     <script src="js/index.js"></script>
+    <script src="js/pagination.js"></script>
     <script src="testgraphicdata/dotdata.js"></script>
-
 
 </head>
 <body>
@@ -64,7 +64,7 @@
             </div>
             <div id="chartArea" class="modal-body">
             </div>
-            <div id="paginationArea">
+            <div id="paginationArea" style="text-align: center">
                 <ul id="pagination" class="pagination"></ul>
             </div>
         </div>
@@ -182,6 +182,8 @@
 
 <script>
 
+    renderPagination(100, 1);
+
     var top10Data = [{country: 'United States', counts: 600},
         {country: 'China', counts: 400},
         {country: 'Russia', counts: 200},
@@ -194,6 +196,27 @@
         {country: 'blah3', counts: 200}];
 
     GraphicChart.createTop10PieChart(top10Data, "#chartArea", null, "top 10");
+
+
+    function renderPage(pageNumber) {
+//        $.ajax({
+//            url: '../store/product',
+//            type: 'POST',
+//            contentType: "application/json; charset=utf-8",
+//            async: true,
+//            data: JSON.stringify({"storeID": getUrlParameter("storeID"), "pageID": pageNumber}),
+//            dataType: 'json',
+//            success: function (productListData) {
+//                console.log(productListData);
+//                renderProductList(productListData.productList);
+//                renderPagination(productListData.productNumber, productListData.pageID);
+//                bindClickButton();
+//                bindLink();
+//            }
+//        });
+        renderPagination(100, pageNumber);
+
+    }
 
     //var yearlydata=[
     //    {month:"Jan",counts:300},

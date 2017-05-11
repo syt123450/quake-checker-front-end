@@ -3,7 +3,7 @@
  */
 function renderPagination(totalItem, pageNumber) {
 
-    var totalPage = Math.ceil(totalItem / 15);
+    var totalPage = Math.ceil(totalItem / 5);
     $("#pagination").attr("data-page", pageNumber);
 
     switch (totalPage) {
