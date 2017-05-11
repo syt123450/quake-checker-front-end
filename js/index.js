@@ -15,16 +15,28 @@ $(function() {
         $("#language").show();
         bindEvent();
         renderEnglishAsideNav();
+        renderEnglishModalTitle();
         buildEnvironment(window.innerWidth * 0.8, window.innerHeight, test_data());
     }
 
     $("#language select").on("change", function () {
         language = $(this).val();
-        console.log(language);
         changeLanguage();
     });
 
 });
+
+function renderEnglishModalTitle() {
+    $("#modal .modal-title").text(modalTitle.english.header1);
+    $("#modal2 .modal-title").text(modalTitle.english.header2);
+    $("#modal3 .modal-title").text(modalTitle.english.header3);
+}
+
+function renderChineseModalTitle() {
+    $("#modal .modal-title").text(modalTitle.chinese.header1);
+    $("#modal2 .modal-title").text(modalTitle.chinese.header2);
+    $("#modal3 .modal-title").text(modalTitle.chinese.header3);
+}
 
 function renderEnglishAsideNav() {
     $("aside h2").text(navText.english.title);
@@ -45,8 +57,10 @@ function renderChineseAsideNav() {
 function changeLanguage() {
     if (language == "chinese") {
         renderChineseAsideNav();
+        renderChineseModalTitle();
     } else {
         renderEnglishAsideNav();
+        renderEnglishModalTitle();
     }
 }
 

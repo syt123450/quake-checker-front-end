@@ -17,3 +17,16 @@ var navText = {
         "button3": "关于我们"
     }
 };
+
+var modalTitle = {
+    "english": {
+        "header1": "Country Earthquake Analysis",
+        "header2": "Famous Earthquakes",
+        "header3": "About Us"
+    },
+    "chinese": {
+        "header1": "国家地震分析",
+        "header2": "历史著名地震介绍",
+        "header3": "关于我们"
+    }
+};
