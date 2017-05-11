@@ -212,3 +212,15 @@ select:focus {
     color: #AAA;
     cursor: auto;
 }
+
+#webgl {
+    margin-left: 20%;
+    width: 80%;
+}
+
+@media (max-width: 400px) {
+    #webgl {
+        margin-left: 0;
+        width: 100%;
+    }
+}

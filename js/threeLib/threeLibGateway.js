@@ -4,10 +4,10 @@
 
  var IS_EARTH_IN_MOBILE = false;
 
-function buildEnvironment(){
+function buildEnvironment(width, height){
      
- var width= window.innerWidth * 0.8;
- var height= window.innerHeight;
+ // var width= window.innerWidth * 0.8;
+ // var height= window.innerHeight;
  var localizationLog = -87.62;//longitude of Chicago
  var length = 10;
  //var localPoint = ;
