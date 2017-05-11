@@ -4,6 +4,15 @@ html, body {
     position: relative;
 }
 
+input, button.btn, button.btn:focus, button.btn:hover, button.btn:active {
+    outline: none;
+    border: 1px solid #ff6600;
+}
+
+input:hover, button:hover {
+    border: 2px solid #ff6600;
+}
+
 body {
     background: url("../img/galaxy_starfield.png");
 }

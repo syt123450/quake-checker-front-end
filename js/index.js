@@ -13,14 +13,11 @@ $(function() {
         bindSmallEvent();
         relocatedCameraForMobile();
         getOnLoadData(window.innerWidth, window.innerHeight);
-        // buildEnvironment(window.innerWidth, window.innerHeight, test_data());
     } else {
         $("aside").show();
         $("#language").show();
         bindEvent();
-        // getOnLoadData();
         getOnLoadData(window.innerWidth * 0.8, window.innerHeight);
-        // buildEnvironment(window.innerWidth * 0.8, window.innerHeight, test_data());
     }
 
     $("#language select").on("change", function () {
@@ -35,6 +32,12 @@ $(function() {
         $("#curtain").hide();
     });
 
+    $('#modal').on('show.bs.modal', function () {
+        console.log("Load geo data.");
+        Global_Country_Name = $("aside input").val();
+        renderPage(1);
+    })
+
 });
 
 function getOnLoadData(width, height) {
@@ -46,12 +49,7 @@ function getOnLoadData(width, height) {
            dataType: 'json',
            success: function (MonthPointData) {
                console.log(MonthPointData);
-               // renderProductList(productListData.productList);
-               // renderPagination(productListData.productNumber, productListData.pageID);
-               // bindClickButton();
-               // bindLink();
                buildEnvironment(width, height, MonthPointData);
-
            }
        });
 }

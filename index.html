@@ -5,18 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Earth</title>
     <style>
-        /*html{width: 100%; height: 100%;}*/
-        /*body { width: 100%; height: 100%;margin: 0; overflow: hidden; background-color: #000; }*/
-        /*#webgl {*/
-        /*width: 100px;*/
-        /*height: 100px;*/
-        /*}*/
-        /*.webgl-error { font: 15px/30px monospace; text-align: center; color: #fff; margin: 50px; }*/
-        /*.webgl-error a { color: #fff; }*/
 
         .diagramHeader {
-            width:100%;
-            text-align:center;
+            width: 100%;
+            text-align: center;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .info {
+            position: absolute;
+            z-index: 10000;
         }
 
     </style>
@@ -155,28 +154,16 @@
 
 <script>
 
-    testinggeodata.forEach(function(feature){
-        if(feature.properties.alert){
-            var newitem={};
-            newitem.depth=feature.geometry.coordinates[2];
-            newitem.time=feature.properties.time;
-            newitem.mag=feature.properties.mag;
-            newitem.alert=feature.properties.alert;
-            newitem.place=feature.properties.place;
-			
-            dotdepthdata.push(newitem);}
-    });
-
-    testinggeodata.forEach(function(feature){
-        if(feature.properties.time>(new Date("2016-10-1")).getTime()){
-            var newitem={};
-            newitem.lat=feature.geometry.coordinates[1];
-            newitem.lng=feature.geometry.coordinates[0];
-            newitem.mag=feature.properties.mag;
-            newitem.alert=feature.properties.alert;
-            newitem.place=feature.properties.place;
-            newitem.time=feature.properties.time;
-			newitem.iso3="JPN";
+    testinggeodata.forEach(function (feature) {
+        if (feature.properties.time > (new Date("2016-10-1")).getTime()) {
+            var newitem = {};
+            newitem.lat = feature.geometry.coordinates[1];
+            newitem.lng = feature.geometry.coordinates[0];
+            newitem.mag = feature.properties.mag;
+            newitem.alert = feature.properties.alert;
+            newitem.place = feature.properties.place;
+            newitem.time = feature.properties.time;
+            newitem.iso3 = "JPN";
             dotgeodata.push(newitem);
         }
     });
@@ -190,127 +177,60 @@
         "yearData": "/API/yearData",
         "depthData": "/API/depthData"
     };
-	
-	var Global_Country_Name = "Japan";
-	
-	////-----global variable for test language -------
-	var language ="english";
-	////-------------------------------------------
-	
 
-    var top10Data = [{country: 'United States', counts: 600},
-        {country: 'China', counts: 400},
-        {country: 'Russia', counts: 200},
-        {country: 'Japan', counts: 200},
-        {country: 'United Kindom', counts: 200},
-        {country: 'Indianisia', counts: 200},
-        {country: 'blahblahblah', counts: 200},
-        {country: 'blah1', counts: 200},
-        {country: 'blah2', counts: 200},
-        {country: 'blah3', counts: 200}];
+    var Global_Country_Name = "Japan";
 
-    GraphicChart.createGeoDotChart(dotgeodata,"#chartArea",null,"geo diagram","JPN");
-//    GraphicChart.createTop10PieChart(top10Data, "#chartArea", null, "top 10");
-	
-	var getDiagramData =function(url,method,inputData,chartCreation,heading){
-		$.ajax({
-			url: url,
-			type: method?method:"GET",
-			contentType: "application/json; charset=utf-8",
-			async: true,
-			data: inputData,//JSON.stringify({"countryName": Global_Country_Name}),
-			dataType: 'json',
-			success: function (data) {
-				chartCreation(data,"#chartArea",null,heading,data[0].iso3);
-			}
-		});
-	}
-	
+
+    GraphicChart.createGeoDotChart(dotgeodata, "#chartArea", null, "geo diagram", "JPN");
+
+    var getDiagramData = function (url, method, inputData, chartCreation, heading) {
+        $.ajax({
+            url: url,
+            type: method ? method : "GET",
+            contentType: "application/json; charset=utf-8",
+            async: true,
+            data: inputData,
+            dataType: 'json',
+            success: function (data) {
+                chartCreation(data, "#chartArea", null, heading, data[0].iso3);
+            }
+        });
+    };
+
     function renderPage(pageNumber) {
-//        $.ajax({
-//            url: '../store/product',
-//            type: 'POST',
-//            contentType: "application/json; charset=utf-8",
-//            async: true,
-//            data: JSON.stringify({"storeID": getUrlParameter("storeID"), "pageID": pageNumber}),
-//            dataType: 'json',
-//            success: function (productListData) {
-//                console.log(productListData);
-//                renderProductList(productListData.productList);
-//                renderPagination(productListData.productNumber, productListData.pageID);
-//                bindClickButton();
-//                bindLink();
-//            }
-//        });
+
 
         GraphicChart.removeAll();
 
         if (pageNumber == 1) {
 
-			getDiagramData(dataLink.dotData,
-						   "POST",
-						   JSON.stringify({"countryName": Global_Country_Name}),
-						   GraphicChart.createGeoDotChart,
-						   chartHeading.dotData[language]);
-           // GraphicChart.createGeoDotChart(dotgeodata,"#chartArea",null,"geo diagram","JPN");
+            getDiagramData(dataLink.dotData,
+                "POST",
+                JSON.stringify({"countryName": Global_Country_Name}),
+                GraphicChart.createGeoDotChart,
+                chartHeading.dotData[language]);
         } else if (pageNumber == 2) {
-			getDiagramData(dataLink.depthData,
-						   "POST",
-						   JSON.stringify({"countryName": Global_Country_Name}),
-						   GraphicChart.createDepthDotChart,
-						   chartHeading.depthData[language]);
-           // GraphicChart.createDepthDotChart(dotdepthdata,"#chartArea",null,"depth diagram");
+            getDiagramData(dataLink.depthData,
+                "POST",
+                JSON.stringify({"countryName": Global_Country_Name}),
+                GraphicChart.createDepthDotChart,
+                chartHeading.depthData[language]);
         } else if (pageNumber == 3) {
-			getDiagramData(dataLink.top10,
-						   "GET",
-						   null,
-						   GraphicChart.createTop10PieChart,
-						   chartHeading.top10[language]);
-            //GraphicChart.createTop10PieChart(top10Data, "#chartArea", null, "top 10");
+            getDiagramData(dataLink.top10,
+                "GET",
+                null,
+                GraphicChart.createTop10PieChart,
+                chartHeading.top10[language]);
         } else {
-			getDiagramData(dataLink.yearData,
-						   "POST",
-						   JSON.stringify({"countryName": Global_Country_Name}),
-						   GraphicChart.createYearlyBarChart,
-						   chartHeading.yearData[language]);
-            //GraphicChart.createYearlyBarChart(yearlydata,"#chartArea", null," yearly report");
+            getDiagramData(dataLink.yearData,
+                "POST",
+                JSON.stringify({"countryName": Global_Country_Name}),
+                GraphicChart.createYearlyBarChart,
+                chartHeading.yearData[language]);
         }
 
         renderPagination(20, pageNumber);
     }
-
-    var yearlydata=[
-        {month:"Jan",counts:300},
-        {month:"Feb",counts:340},
-        {month:"Mar",counts:500},
-        {month:"Apr",counts:366},
-        {month:"May",counts:500},
-        {month:"Jun",counts:345},
-        {month:"Jul",counts:390},
-        {month:"Aug",counts:600},
-        {month:"Sep",counts:432},
-        {month:"Oct",counts:501},
-        {month:"Nov",counts:600},
-        {month:"Dev",counts:483}
-    ];
-    //
-    //GraphicChart.createYearlyBarChart(yearlydata,"#chartArea", null," yearly report");
-
-    var seasonaldata=[
-        {dayrange:"1/1-1/10",counts:390},
-        {dayrange:"1/11-1/20",counts:300},
-        {dayrange:"1/21-1/30",counts:320},
-        {dayrange:"1/31-2/9",counts:308},
-        {dayrange:"2/10-2/19",counts:330},
-        {dayrange:"2/20-3/1",counts:350},
-        {dayrange:"3/2-3/11",counts:500},
-        {dayrange:"3/12-3/21",counts:300},
-        {dayrange:"3/22-3/31",counts:300}
-    ];
-    //
-    //GraphicChart.createSeasonalBarChart(seasonaldata,"#chartArea", null," seasonal report");
-    //
-    //GraphicChart.createDepthDotChart(dotdepthdata,"#chartArea",null,"depth diagram");
 
 
 </script>
