@@ -5,21 +5,37 @@
 $(function() {
 
     if (document.body.clientWidth < 400) {
-        $("aside").hide();
         $("#language").hide();
         $("#smallIcon").show();
         relocatedCameraForMobile();
         buildEnvironment(window.innerWidth, window.innerHeight, test_data());
     } else {
+        $("aside").show();
+        $("#language").show();
         buildEnvironment(window.innerWidth * 0.8, window.innerHeight, test_data());
     }
 
     $("#smallIcon").click(function() {
-        $("#hideNav").show();
+        $("#hideNav").slideDown();
         $("#curtain").show();
     });
 
     $("#curtain").click(function() {
+        $("#hideNav").hide();
+        $("#curtain").hide();
+    });
+
+    $("#smallButton1").click(function() {
+        $("#hideNav").hide();
+        $("#curtain").hide();
+    });
+
+    $("#smallButton2").click(function() {
+        $("#hideNav").hide();
+        $("#curtain").hide();
+    });
+
+    $("#smallButton3").click(function() {
         $("#hideNav").hide();
         $("#curtain").hide();
     });

@@ -14,37 +14,6 @@
         /*.webgl-error { font: 15px/30px monospace; text-align: center; color: #fff; margin: 50px; }*/
         /*.webgl-error a { color: #fff; }*/
 
-        #hideNav {
-            position: absolute;
-            top: 0;
-            width: 100%;
-            background-color: red;
-            display: none;
-            z-index: 100;
-        }
-
-        nav button {
-            width: 100%;
-        }
-
-        #curtain {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #aaaaaa;
-            z-index: 10;
-            opacity: 0.5;
-            display: none;
-        }
-
-        #smallIcon {
-            position:absolute;
-            left:0;
-            width:90px;
-            display: none;
-        }
         .diagramHeader {
             width:100%;
             text-align:center;
@@ -60,7 +29,7 @@
     <script src="js/resource/TrackballControls.js"></script>
 
     <link rel="stylesheet" href="css/index.css">
-
+    <link rel="stylesheet" href="css/indexMobile.css">
 
     <script src="./js/resource/d3.min.js"></script>
     <script src="js/threeLib/threeLibUtils.js"></script>
@@ -77,9 +46,18 @@
 <img id="smallIcon" src="img/logo.png">
 
 <nav id="hideNav">
-    <button>Hello</button>
-    <button>Hello</button>
-    <button>Hello</button>
+    <h2>Search Country</h2>
+    <input type="text" placeholder="Country">
+    <button id="smallButton1" class="btn" data-toggle="modal" data-target="#modal">See Info</button>
+    <button id="smallButton2" class="btn" data-toggle="modal" data-target="#modal2">Famous Earthquake</button>
+    <button id="smallButton3" class="btn" data-toggle="modal" data-target="#modal3">About Us</button>
+    <div>
+        <select name="type" title="Select Language">
+            <option value="">Language</option>
+            <option value="english">English</option>
+            <option value="chinese">Chinese</option>
+        </select>
+    </div>
 </nav>
 
 <div id="curtain"></div>
@@ -227,8 +205,6 @@
 </body>
 
 <script>
-
-
 
     testinggeodata.forEach(function(feature){
         if(feature.properties.alert){
