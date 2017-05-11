@@ -4,7 +4,7 @@
 
  var IS_EARTH_IN_MOBILE = false;
 
-function buildEnvironment(width, height){
+function buildEnvironment(width, height, data){
      
  // var width= window.innerWidth * 0.8;
  // var height= window.innerHeight;
@@ -38,35 +38,10 @@ function buildEnvironment(width, height){
         }, 1000);
     }
 
-	////////////------------ generate test data -----------
-	var latGen = function () {
-		return Math.random() * 180 - 90;
-	};
-	var lngGen = function () {
-		return Math.random() * 360 - 180;
-	};
-	var magGen = function () {
-		return Math.random() * 9;
-	};
-	var depGen = function () {
-		return Math.random() * 380;
-	};
-	var test_data = function () {
-		var month = [];
-		for (var i = 0; i < 31; i++) {
-			var date = [];
-
-			for (var j = 0; j < Math.random() * 9; j++) {
-				var event = [latGen(), lngGen(), magGen(), depGen()];
-				date.push(event);
-			}
-			month.push(date);
-		}
 
 
-		return month;
-	};
-	setTimeout(earthquakeAnimation_addDay(test_data(), 0), 1000);
+	// setTimeout(earthquakeAnimation_addDay(test_data(), 0), 1000);
+    setTimeout(earthquakeAnimation_addDay(data, 0), 1000);
 	////////---------------------
 
 
