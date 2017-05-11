@@ -90,3 +90,14 @@ var historyEarthquakeText = {
         }
     }
 };
+
+var aboutUsText = {
+    "english": {
+        "title": "This project is designed to raise attention of the audience on earthquake hazards.",
+        "content": "In order to raise awareness of the public, our project has created a 3D earth and historical earthquake data points are added to 3D earth accordingly. Graphical analysis of earthquake magnitude v.s. time, number of earthquakes v.s. monthly distribution, earthquake magnitude v.s. Geolocation are provided to user for additional information . Users can also filter earthquake magnitude and countries information accordingly. Informations such as 6 famous earthquakes has also been added to the website feature. "
+    },
+    "chinese": {
+        "title": "关于我们标题",
+        "content": "关于我们内容"
+    }
+};

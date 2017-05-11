@@ -254,7 +254,7 @@ select:focus {
     border: 1px solid #ff6600;
 }
 
-#modal2 .modal-body h5 a, #modal3 .modal-body h5 a {
+#modal2 .modal-body h5 a, #modal3 .modal-body h5 {
     color: #ff6600;
 }
 
