@@ -242,7 +242,7 @@ Dot.prototype.animation=function(){
 	var dotGeo=this.geo;
 	//console.log(dotGeo.vertices);
 	var startPositons=this.verticesPos;;
-	var radio=1.1;
+	var radio=1.5;
 	return (function(){
 		
 		if(dotGeo.vertices[0].z > -0.0045){
