@@ -12,12 +12,15 @@ $(function() {
         $("#smallIcon").show();
         bindSmallEvent();
         relocatedCameraForMobile();
-        buildEnvironment(window.innerWidth, window.innerHeight, test_data());
+        getOnLoadData(window.innerWidth, window.innerHeight);
+        // buildEnvironment(window.innerWidth, window.innerHeight, test_data());
     } else {
         $("aside").show();
         $("#language").show();
         bindEvent();
-        buildEnvironment(window.innerWidth * 0.8, window.innerHeight, test_data());
+        // getOnLoadData();
+        getOnLoadData(window.innerWidth * 0.8, window.innerHeight);
+        // buildEnvironment(window.innerWidth * 0.8, window.innerHeight, test_data());
     }
 
     $("#language select").on("change", function () {
@@ -33,6 +36,25 @@ $(function() {
     });
 
 });
+
+function getOnLoadData(width, height) {
+           $.ajax({
+           url: dataLink.onLoad,
+           type: 'GET',
+           contentType: "application/json; charset=utf-8",
+           async: true,
+           dataType: 'json',
+           success: function (MonthPointData) {
+               console.log(MonthPointData);
+               // renderProductList(productListData.productList);
+               // renderPagination(productListData.productNumber, productListData.pageID);
+               // bindClickButton();
+               // bindLink();
+               buildEnvironment(width, height, MonthPointData);
+
+           }
+       });
+}
 
 function bindEvent() {
     $("#button1").click(function() {
