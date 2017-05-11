@@ -109,3 +109,23 @@ var aboutUsText = {
         "content": "为了提高公众的意识，我们的项目已经创建了一个3D地球，并且相应地将3D地球的地震数据点添加到了3D地球。地震震级的图形分析时间，地震数量月度分布，地震震级向用户提供地理位置以获取更多信息。用户还可以相应地过滤地震国家信息。网站功能也添加了6次着名地震等信息。"
     }
 };
+
+
+var chartHeading={
+		"top10":{
+			"chinese":"十大地震高发国家",
+			"english":"TOP 10 COUNTRIES"
+		},
+		"dotData":{
+			"chinese":"地震分布图",
+			"english":"EARTHQUAKE GEO MAP"
+		},
+		"yearData":{
+			"chinese":"过去12个月地震次数",
+			"english":"EARTHQUAKE FREQUENCE IN PAST 12 MONTHS"
+		},
+		"depthData":{
+			"chinese":"地震深度图",
+			"english":"EARTHQUAKE DEPTH MAP"
+		}
+	}

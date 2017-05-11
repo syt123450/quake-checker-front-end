@@ -197,24 +197,7 @@
 	var language ="english";
 	////-------------------------------------------
 	
-	var chartHeading={
-		"top10":{
-			"chinese":"十大地震高发国家",
-			"english":"TOP 10 COUNTRIES"
-		},
-		"dotData":{
-			"chinese":"地震分布图",
-			"english":"EARTHQUAKE GEO MAP"
-		},
-		"yearData":{
-			"chinese":"过去12个月地震次数",
-			"english":"EARTHQUAKE FREQUENCE IN PAST 12 MONTHS"
-		},
-		"depthData":{
-			"chinese":"地震深度图",
-			"english":"EARTHQUAKE DEPTH MAP"
-		}
-	}
+
     var top10Data = [{country: 'United States', counts: 600},
         {country: 'China', counts: 400},
         {country: 'Russia', counts: 200},
@@ -235,7 +218,7 @@
 			type: method?method:"GET",
 			contentType: "application/json; charset=utf-8",
 			async: true,
-			data: data,//JSON.stringify({"countryName": Global_Country_Name}),
+			data: inputData,//JSON.stringify({"countryName": Global_Country_Name}),
 			dataType: 'json',
 			success: function (data) {
 				chartCreation(data,"#chartArea",null,heading,data[0].iso3);
