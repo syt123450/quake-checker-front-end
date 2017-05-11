@@ -57,7 +57,7 @@ aside button.btn:hover {
     color: #ff6600;
 }
 
-#modal {
+#modal,#modal2,#modal3{
     position: absolute;
     top: 50px;
     left: 400px;
@@ -66,12 +66,12 @@ aside button.btn:hover {
     box-sizing: border-box;
 }
 
-#modal2 {
+/*#modal2 {
     position: absolute;
     top: 50px;
     left: 400px;
     width: 600px;
-    /*border: 1px solid #ff6600;*/
+    border: 1px solid #ff6600;
     box-sizing: border-box;
 
 }
@@ -80,12 +80,31 @@ aside button.btn:hover {
     top: 50px;
     left: 400px;
     width: 600px;
-    /*border: 1px solid #ff6600;*/
+    border: 1px solid #ff6600;
     box-sizing: border-box;
 
-}
-.modal-body {
-  height: 400px;
+}*/
+@media only screen and (min-width: 400px) {
+   #modal,#modal2,#modal3{
+       width:100%;
+       margin-left: 0px;
+    }
+    #chartArea {
+    height: 400px;
+    width: 100%;
+   }
+    .modal .modal-body {
+     height: 400px;
+        margin-left: 0px;
+    }
+    .modal2 .modal-body{
+        width: 100%;
+        margin-left: 0px;
+    }
+      .modal3 .modal-body{
+        width: 100%;
+        margin-left: 0px;
+    }
 }
 
 #language {

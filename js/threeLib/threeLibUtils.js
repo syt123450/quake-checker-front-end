@@ -60,7 +60,7 @@ function buildEarthModel(width,height,localizationLog,length) {
     camera.position.z = 1.5;
 	earth.scene.add(camera);
     
-    var controls = new THREE.TrackballControls(camera);
+    var controls = new THREE.TrackballControls(camera,webgl);
 	earth.createObject(localizationLog);
 
 	//scene.add(earth.object);
