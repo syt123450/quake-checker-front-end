@@ -14,6 +14,38 @@
         /*.webgl-error { font: 15px/30px monospace; text-align: center; color: #fff; margin: 50px; }*/
         /*.webgl-error a { color: #fff; }*/
 
+        #hideNav {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            background-color: red;
+            display: none;
+            z-index: 100;
+        }
+
+        nav button {
+            width: 100%;
+        }
+
+        #curtain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #aaaaaa;
+            z-index: 10;
+            opacity: 0.5;
+            display: none;
+        }
+
+        #smallIcon {
+            position:absolute;
+            left:0;
+            width:90px;
+            display: none;
+        }
+
     </style>
 
     <link rel='icon' href='img/logo_black.ico' type=‘image/x-ico’>
@@ -37,6 +69,16 @@
 
 </head>
 <body>
+
+<img id="smallIcon" src="img/logo.png">
+
+<nav id="hideNav">
+    <button>Hello</button>
+    <button>Hello</button>
+    <button>Hello</button>
+</nav>
+
+<div id="curtain"></div>
 
 <aside>
     <img style="width: 60px;" src="img/logo.png">
@@ -72,7 +114,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="modal fade" id="modal2" role="dialog">
     <div class="modal-dialog">
@@ -178,11 +219,13 @@
     </select>
 </div>
 
-<div style="margin-left: 20%;width: 80%;" id="webgl"></div>
+<div id="webgl"></div>
 
 </body>
 
 <script>
+
+
 
     testinggeodata.forEach(function(feature){
         if(feature.properties.alert){
@@ -296,6 +339,7 @@
     //GraphicChart.createSeasonalBarChart(seasonaldata,"#chartArea", null," seasonal report");
     //
     //GraphicChart.createDepthDotChart(dotdepthdata,"#chartArea",null,"depth diagram");
+
 
 </script>
 
