@@ -71,6 +71,8 @@ function renderEnglishHistoryEarthquakeText() {
     $("#modal2 .modal-body p:eq(3)").text(historyEarthquakeText.english[3].content);
     $("#modal2 .modal-body h5 a:eq(4)").text(historyEarthquakeText.english[4].title);
     $("#modal2 .modal-body p:eq(4)").text(historyEarthquakeText.english[4].content);
+    $("#modal2 .modal-body h5 a:eq(5)").text(historyEarthquakeText.english[5].title);
+    $("#modal2 .modal-body p:eq(5)").text(historyEarthquakeText.english[5].content);
 }
 
 function renderChineseHistoryEarthquakeText() {
@@ -84,6 +86,8 @@ function renderChineseHistoryEarthquakeText() {
     $("#modal2 .modal-body p:eq(3)").text(historyEarthquakeText.chinese[3].content);
     $("#modal2 .modal-body h5 a:eq(4)").text(historyEarthquakeText.chinese[4].title);
     $("#modal2 .modal-body p:eq(4)").text(historyEarthquakeText.chinese[4].content);
+    $("#modal2 .modal-body h5 a:eq(5)").text(historyEarthquakeText.chinese[5].title);
+    $("#modal2 .modal-body p:eq(5)").text(historyEarthquakeText.chinese[5].content);
 }
 
 function renderEnglishAboutUsText() {

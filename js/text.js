@@ -63,6 +63,10 @@ var historyEarthquakeText = {
             "content": "Growing forces pushing the Pacific and the North American tectonic plates toward each other caused the Pacific plate to slip about 42 feet at an angle beneath Alaska and beneath the seafloor just south of the port of Anchorage, which was destroyed. Seismometers that detect surface waves around the world were knocked off scale for hours. When recording resumed, they were measuring surface waves that continued to go around the Earth for several days, again as if the whole Earth were ringing and at exactly the same frequencies as the great Chilean earthquake nearly 4 years earlier. Large amounts of water were almost immediately moved up or down several yards because the main fault surface that broke was beneath the ocean floor. This seafloor motion caused a tsunami, or water wave, that traveled all over the Pacific Ocean, causing further damage, even killing people on a beach in California."
         },
         "4": {
+            "title": "5. Tangshan, China: July 27, 1976 (Magnitude: About 7.5)",
+            "content": "A devastating earthquake occurred in eastern China, about 100 miles from Beijing in a coal-mining area where thousands of people worked underground day and night. In the densely populated town of Tangshan, buildings were constructed with heavy masonry but with no special precautions to withstand earthquake shaking. About 240,000 people died. In this part of the world, the boundary between tectonic plates is not clearly defined. Rather, it appears as if a region millions of square miles in extent is deforming, or changing shape, not by a steady process but by earthquakes."
+        },
+        "5": {
             "title": "6. Sumatra, Indonesia, Dec. 26, 2004. (Magnitude: About 9.0)",
             "content": "A 9.0 magnitude earthquake — the largest earthquake in 40 years — caused a powerful tsunami in the Indian Ocean that devastated 12 Asian countries. The earthquake's epicenter was off the west coast of the Indonesian Island of Sumatra. A week later the death toll was estimated at 150,000 — a month later some estimate double that number. Hardest hit were Indonesia (particularly the province of Aceh), Sri Lanka, India, Thailand, and the Maldives. Millions of people lost their homes. Since entire families and towns were destroyed and bodies were swept out to sea, it's possible we will never know the total number lives lost."
         }
@@ -86,6 +90,10 @@ var historyEarthquakeText = {
         },
         "4": {
             "title": "地震5",
+            "content": "加点内容"
+        },
+        "5": {
+            "title": "地震6",
             "content": "加点内容"
         }
     }
