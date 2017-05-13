@@ -34,11 +34,75 @@ $(function() {
 
     $('#modal').on('show.bs.modal', function () {
         console.log("Load geo data.");
-        Global_Country_Name = $("aside input").val();
-        renderPage(1);
+        if (document.body.clientWidth > 400) {
+            Global_Country_Name = $("aside input").val();
+            renderPage(1);
+        }
+    }).on('shown.bs.modal', function () {
+        if (document.body.clientWidth < 400) {
+            Global_Country_Name = $("#hideNav input").val();
+            renderPage(1);
+        }
     })
 
 });
+
+var dataLink = {
+    "onLoad": "/API/Initialize",
+    "top10": "/API/top10",
+    "dotData": "/API/DotData",
+    "yearData": "/API/yearData",
+    "depthData": "/API/depthData"
+};
+
+var getDiagramData = function (url, method, inputData, chartCreation, heading) {
+    $.ajax({
+        url: url,
+        type: method ? method : "GET",
+        contentType: "application/json; charset=utf-8",
+        async: true,
+        data: inputData,
+        dataType: 'json',
+        success: function (data) {
+            chartCreation(data, "#chartArea", null, heading, data[0].iso3);
+        }
+    });
+};
+
+function renderPage(pageNumber) {
+
+    GraphicChart.removeAll();
+
+    if (pageNumber == 1) {
+
+        getDiagramData(dataLink.dotData,
+            "POST",
+            JSON.stringify({"countryName": Global_Country_Name}),
+            GraphicChart.createGeoDotChart,
+            chartHeading.dotData[language]);
+    } else if (pageNumber == 2) {
+        getDiagramData(dataLink.depthData,
+            "POST",
+            JSON.stringify({"countryName": Global_Country_Name}),
+            GraphicChart.createDepthDotChart,
+            chartHeading.depthData[language]);
+    } else if (pageNumber == 3) {
+        getDiagramData(dataLink.top10,
+            "GET",
+            null,
+            GraphicChart.createTop10PieChart,
+            chartHeading.top10[language]);
+    } else {
+        getDiagramData(dataLink.yearData,
+            "POST",
+            JSON.stringify({"countryName": Global_Country_Name}),
+            GraphicChart.createYearlyBarChart,
+            chartHeading.yearData[language]);
+    }
+
+    renderPagination(20, pageNumber);
+}
+
 
 function getOnLoadData(width, height) {
            $.ajax({
@@ -103,33 +167,4 @@ String.prototype.format = function () {
     return this.replace(/(\{\d+\})/g, function (a) {
         return args[+(a.substr(1, a.length - 2)) || 0];
     });
-};
-
-////////////------------ generate test data -----------
-var latGen = function () {
-    return Math.random() * 180 - 90;
-};
-var lngGen = function () {
-    return Math.random() * 360 - 180;
-};
-var magGen = function () {
-    return Math.random() * 9;
-};
-var depGen = function () {
-    return Math.random() * 380;
-};
-
-var test_data = function () {
-    var month = [];
-    for (var i = 0; i < 31; i++) {
-        var date = [];
-
-        for (var j = 0; j < Math.random() * 9; j++) {
-            var event = [latGen(), lngGen(), magGen(), depGen()];
-            date.push(event);
-        }
-        month.push(date);
-    }
-
-    return month;
 };

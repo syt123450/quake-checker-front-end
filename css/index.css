@@ -13,6 +13,18 @@ input:hover, button:hover {
     border: 2px solid #ff6600;
 }
 
+.diagramHeader {
+    width: 100%;
+    text-align: center;
+    color: #000;
+    font-weight: bold;
+}
+
+.info {
+    position: absolute;
+    z-index: 10000;
+}
+
 body {
     background: url("../img/galaxy_starfield.png");
 }
@@ -89,12 +101,15 @@ aside button.btn:focus {
     top: 50px;
     margin-left: 100px;
     width: 100%;
-    /*border: 1px solid #ff6600;*/
     box-sizing: border-box;
     height: 650px;
     overflow: scroll;
     z-index: 9999;
 
+}
+
+#paginationArea {
+    text-align: center;
 }
 
 #modal2, #modal3 {
@@ -102,35 +117,15 @@ aside button.btn:focus {
     top: 50px;
     margin-left: 100px;
     width: 100%;
-    /*border: 1px solid #ff6600;*/
-    /*box-sizing: border-box;*/
     height: 650px;
     overflow: scroll;
     z-index: 9999;
-    /*background-color: #333333;*/
 }
 
 #modalLabel, #about, #famous {
     color: #FF6600;
 }
 
-/*#modal2 {
-    position: absolute;
-    top: 50px;
-    left: 400px;
-    width: 600px;
-    border: 1px solid #ff6600;
-    box-sizing: border-box;
-}
-#modal3 {
-    position: absolute;
-    top: 50px;
-    left: 400px;
-    width: 600px;
-    border: 1px solid #ff6600;
-    box-sizing: border-box;
-
-}*/
 .modal .modal-body {
     height: 500px;
     overflow: scroll;

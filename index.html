@@ -4,24 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Earthquake Checker - Live Earthquake Heat Map</title>
-    <meta name="description" content="Earthquake Checker collects earthquake data from USGS, shows these information on a 3D earth model with graphical analysis. " />
-    <style>
+    <meta name="description"
+          content="Earthquake Checker collects earthquake data from USGS, shows these information on a 3D earth model with graphical analysis. "/>
 
-        .diagramHeader {
-            width: 100%;
-            text-align: center;
-            color: #000;
-            font-weight: bold;
-        }
-
-        .info {
-            position: absolute;
-            z-index: 10000;
-        }
-
-    </style>
-
-    <link rel='icon' href='img/logo_black.ico' type='image/x-ico' title='Earthquake Checker Small Logo' >
+    <link rel='icon' href='img/logo_black.ico' type='image/x-ico' title='Earthquake Checker Small Logo'>
     <script src="js/resource/jquery.min.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <script src="js/resource/bootstrap.min.js"></script>
@@ -40,13 +26,12 @@
     <script src="js/resource/pagination.js"></script>
     <script src="js/text.js"></script>
     <script src="js/localization.js"></script>
-    <script src="testgraphicdata/dotdata.js"></script>
 
 </head>
 <body>
 
-<img id="smallIcon" src="img/logo.png" title="Small Earthquake Checker Logo" alt="Small Logo of Earthquake Checker website">
-
+<img id="smallIcon" src="img/logo.png" title="Small Earthquake Checker Logo"
+     alt="Small Logo of Earthquake Checker website">
 
 <nav id="hideNav">
     <h2></h2>
@@ -85,7 +70,7 @@
             </div>
             <div id="chartArea" class="modal-body">
             </div>
-            <div id="paginationArea" style="text-align: center">
+            <div id="paginationArea">
                 <ul id="pagination" class="pagination"></ul>
             </div>
         </div>
@@ -118,7 +103,6 @@
 
                 <h5><a href="https://en.wikipedia.org/wiki/2004_Indian_Ocean_earthquake_and_tsunami"></a></h5>
                 <p></p>
-=
             </div>
 
         </div>
@@ -153,87 +137,5 @@
 <div id="webgl"></div>
 
 </body>
-
-<script>
-
-    testinggeodata.forEach(function (feature) {
-        if (feature.properties.time > (new Date("2016-10-1")).getTime()) {
-            var newitem = {};
-            newitem.lat = feature.geometry.coordinates[1];
-            newitem.lng = feature.geometry.coordinates[0];
-            newitem.mag = feature.properties.mag;
-            newitem.alert = feature.properties.alert;
-            newitem.place = feature.properties.place;
-            newitem.time = feature.properties.time;
-            newitem.iso3 = "JPN";
-            dotgeodata.push(newitem);
-        }
-    });
-
-    renderPagination(20, 1);
-
-    var dataLink = {
-        "onLoad": "/API/Initialize",
-        "top10": "/API/top10",
-        "dotData": "/API/DotData",
-        "yearData": "/API/yearData",
-        "depthData": "/API/depthData"
-    };
-
-    var Global_Country_Name = "Japan";
-
-
-    GraphicChart.createGeoDotChart(dotgeodata, "#chartArea", null, "geo diagram", "JPN");
-
-    var getDiagramData = function (url, method, inputData, chartCreation, heading) {
-        $.ajax({
-            url: url,
-            type: method ? method : "GET",
-            contentType: "application/json; charset=utf-8",
-            async: true,
-            data: inputData,
-            dataType: 'json',
-            success: function (data) {
-                chartCreation(data, "#chartArea", null, heading, data[0].iso3);
-            }
-        });
-    };
-
-    function renderPage(pageNumber) {
-
-        GraphicChart.removeAll();
-
-        if (pageNumber == 1) {
-
-            getDiagramData(dataLink.dotData,
-                "POST",
-                JSON.stringify({"countryName": Global_Country_Name}),
-                GraphicChart.createGeoDotChart,
-                chartHeading.dotData[language]);
-        } else if (pageNumber == 2) {
-            getDiagramData(dataLink.depthData,
-                "POST",
-                JSON.stringify({"countryName": Global_Country_Name}),
-                GraphicChart.createDepthDotChart,
-                chartHeading.depthData[language]);
-        } else if (pageNumber == 3) {
-            getDiagramData(dataLink.top10,
-                "GET",
-                null,
-                GraphicChart.createTop10PieChart,
-                chartHeading.top10[language]);
-        } else {
-            getDiagramData(dataLink.yearData,
-                "POST",
-                JSON.stringify({"countryName": Global_Country_Name}),
-                GraphicChart.createYearlyBarChart,
-                chartHeading.yearData[language]);
-        }
-
-        renderPagination(20, pageNumber);
-    }
-
-
-</script>
 
 </html>
